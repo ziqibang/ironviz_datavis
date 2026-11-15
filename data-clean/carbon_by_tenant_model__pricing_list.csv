@@ -1,0 +1,16 @@
+tenant_id,model,wh_mean_central,kwh_central,share_of_tenant_energy_pct
+org-engineering-dev,gpt-4o,2.042,40.014,52.503
+org-engineering-dev,gpt-4o-mini,1.287,13.394,17.575
+org-engineering-dev,o1-preview,6.923,22.805,29.922
+org-marketing-ai,gpt-4o,1.609,24.22,35.617
+org-marketing-ai,gpt-4o-mini,1.239,20.297,29.848
+org-marketing-ai,o1-preview,6.459,23.484,34.535
+org-prod-core,gpt-4o,1.609,24.133,36.493
+org-prod-core,gpt-4o-mini,1.235,20.366,30.796
+org-prod-core,o1-preview,6.448,21.633,32.712
+prj-ai-enterprise-prod,gemini-1.5-flash,0.935,14.892,29.075
+prj-ai-enterprise-prod,gemini-1.5-pro,2.533,36.328,70.925
+prj-ai-r-and-d,gemini-1.5-flash,0.934,14.931,28.914
+prj-ai-r-and-d,gemini-1.5-pro,2.532,36.708,71.086
+prj-ai-sandbox-testing,gemini-1.5-flash,0.979,9.954,13.582
+prj-ai-sandbox-testing,gemini-1.5-pro,3.384,63.333,86.418

@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chart 4 Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--page:#F6F6F3;--card:#FFFFFF;--line:#E2E2DD;--ink:#1A1A1A;--ink2:#4A4A4A;--ink3:#6B6B6B}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif}
+main{max-width:1240px;margin:0 auto;padding:32px 16px 64px;display:flex;flex-direction:column;gap:28px}
+.k{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2)}
+h1{font-family:'Space Grotesk',Inter,sans-serif;font-size:34px;line-height:1.15;margin:4px 0 6px}
+h2{margin:0;font-size:22px;font-weight:600}
+p{margin:0}
+.sub{color:#3F3F3F;max-width:900px}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px}
+.rec{color:#2F5626}
+.panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(540px,1fr));gap:24px;overflow-x:auto}
+.pname{font-size:16px;font-weight:600}
+svg{display:block;width:100%;height:auto}
+svg text{font-family:Inter,system-ui,sans-serif}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--ink2)}
+.sw{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px}
+.trade{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:13px;color:var(--ink2);border-top:1px solid #EFEFEA;padding-top:12px}
+.trade b{display:block;color:var(--ink)}
+@media (max-width:720px){.trade{grid-template-columns:1fr}.panels{grid-template-columns:1fr}}
+.foot{font-size:12px;color:var(--ink2)}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div class="k">Chart 4 · the opportunity · 3 options to compare · as of Oct 2026, synthetic data</div>
+<h1>Each habit change knocks a layer off the bill</h1>
+<p class="sub">Same numbers in all three: Dev $1,843 → $1,271 and Sandbox $613 → $321 a month if they matched local good. Steps from left to right: today → trim prompts → + small model → + reuse text. Each habit's slice is its share of the combined saving (the fixes overlap). New: <b>D</b>, stacks of money.</p>
+</header>
+
+<section id="D">
+<div class="k">Option D · stacks of money · new</div>
+<h2>Every step, bundles of cash come off the pile</h2>
+<p class="sub">1 bundle = $50 (rounded). Above the line: the cash still spent at that step, wrapped in paper bands. Below the line: the bundles saved so far, stacked by habit, fading as they sink.</p>
+<div class="legend" id="lgD"></div>
+<div class="panels" id="pD"></div>
+<div class="trade"><div><b>Strength</b>Cash is the most direct symbol for "the bill"; 3D stacks make each layer and step easy to count</div><div><b>Weakness</b>Rounds to $50 like the coins; a 3D look needs care so depth isn't read as value</div><div><b>Prints to PDF</b>Yes</div></div>
+</section>
+
+<section id="A">
+<div class="k rec">Option A · coin stacks sinking · recommended</div>
+<h2>Every step, a layer of coins drops below the line</h2>
+<p class="sub">1 coin = $50 (rounded). Above the line: the money still spent at that step. Below the line: the coins saved so far, stacked by habit, fading as they sink.</p>
+<div class="legend" id="lgA"></div>
+<div class="panels" id="pA"></div>
+<div class="trade"><div><b>Strength</b>Money symbol anyone gets; countable; every step and every habit layer is visible</div><div><b>Weakness</b>Coins round to $50, so small slices are ±$25</div><div><b>Prints to PDF</b>Yes (blur prints as a soft fade)</div></div>
+</section>
+
+<section id="B">
+<div class="k">Option B · the receipt gets torn shorter</div>
+<h2>The monthly receipt loses a colored strip at every step</h2>
+<p class="sub">Each receipt is the bill at that step; length = dollars. The strip torn off at each step falls below with its habit and amount.</p>
+<div class="legend" id="lgB"></div>
+<div class="panels" id="pB"></div>
+<div class="trade"><div><b>Strength</b>"Bill" metaphor is literal; exact lengths, no rounding</div><div><b>Weakness</b>Busier: many torn edges and labels</div><div><b>Prints to PDF</b>Yes</div></div>
+</section>
+
+<section id="C">
+<div class="k">Option C · the sun sets in steps</div>
+<h2>The bill sinks a little further with each habit</h2>
+<p class="sub">Each sun is the same bill (area = dollars, one scale). Above the line: still spent at that step. Below: the saved part, banded by the habits applied so far.</p>
+<div class="legend" id="lgC"></div>
+<div class="panels" id="pC"></div>
+<div class="trade"><div><b>Strength</b>Keeps the sunset look you liked; area-true</div><div><b>Weakness</b>Areas are harder to compare than heights</div><div><b>Prints to PDF</b>Yes</div></div>
+</section>
+
+<p class="foot">Data: scripts/07_scenarios.py, local good, 30 days, list prices. Habit slices split the combined saving in proportion to each fix's solo saving, the same rule as the dashboard. Data synthetic.</p>
+</main>
+<script>
+const NS = "http://www.w3.org/2000/svg";
+const G = [
+  {name: "Engineering / Developers", before: 1843.47, after: 1271.34, solo: [393.0, 159.4, 110.0], kwh: 13, color: "#B54708", dark: "#5A2202", paper: "#FBF6F1", shades: ["#C25A12", "#E58F4E", "#F5C79E"]},
+  {name: "Sandbox Testers", before: 613.26, after: 320.89, solo: [160.4, 139.7, 68.4], kwh: 23, color: "#1D5FBF", dark: "#0A2756", paper: "#F3F6FB", shades: ["#2F6FCC", "#6F9BE3", "#AFC8F1"]},
+];
+const HAB = ["trim prompts", "small model", "reuse text"];
+const STEPS = ["Today", "Trim prompts", "+ Small model", "+ Reuse text"];
+for (const g of G){ const t = g.before - g.after, s = g.solo.reduce((a, b) => a + b); g.parts = g.solo.map(v => v * t / s); g.total = t; }
+const money = v => "$" + Math.round(v).toLocaleString("en-US");
+function el(tag, a, parent, text){ const n = document.createElementNS(NS, tag); for (const k in a) n.setAttribute(k, a[k]); if (text != null) n.textContent = text; parent && parent.appendChild(n); return n; }
+function panel(id, g, vb){
+  const wrap = document.createElement("div");
+  wrap.innerHTML = `<div class="pname">${g.name}</div>`;
+  const svg = el("svg", {viewBox: vb, role: "img"}); wrap.appendChild(svg);
+  document.getElementById(id).appendChild(wrap);
+  return svg;
+}
+function blurDef(svg, id, sd){ const d = el("defs", {}, svg); const f = el("filter", {id, x: "-50%", y: "-50%", width: "200%", height: "200%"}, d); el("feGaussianBlur", {stdDeviation: sd}, f); }
+function legend(id, sym){
+  const g0 = G[0], g1 = G[1];
+  const items = [[g0.dark, g1.dark, "Still spent"], ...HAB.map((h, i) => [g0.shades[i], g1.shades[i], "Saved by " + h])];
+  document.getElementById(id).innerHTML = items.map(([a, b, t]) => `<span><span class="sw" style="background:linear-gradient(90deg,${a} 50%,${b} 50%);${sym}"></span>${t}</span>`).join("");
+}
+// remaining value after each step: step i removes parts[i-1]
+const remain = g => [g.before, g.before - g.parts[0], g.before - g.parts[0] - g.parts[1], g.after];
+
+// ---------------- A: coins ----------------
+function coinsFor(g, unit){  // largest remainder so the coin counts add to round(before/unit)
+  const vals = [g.after, ...g.parts].map(v => v / unit), N = Math.round(g.before / unit);
+  const fl = vals.map(Math.floor); let left = N - fl.reduce((a, b) => a + b);
+  vals.map((v, i) => [v - fl[i], i]).sort((a, b) => b[0] - a[0]).slice(0, left).forEach(([, i]) => fl[i]++);
+  return fl;  // [after, prompts, mix, cache]
+}
+function coin(svg, x, y, fill, rim, op){  // y = bottom of the coin
+  const T = 6, RX = 25, RY = 7;
+  const gg = el("g", {opacity: op ?? 1}, svg);
+  el("path", {d: `M${x - RX} ${y - T} L${x - RX} ${y} A${RX} ${RY} 0 0 0 ${x + RX} ${y} L${x + RX} ${y - T} Z`, fill: rim}, gg);
+  el("ellipse", {cx: x, cy: y - T, rx: RX, ry: RY, fill, stroke: rim, "stroke-width": 1}, gg);
+  return gg;
+}
+function drawA(){
+  legend("lgA", "border-radius:50%");
+  const UNIT = 50, HZ = 300, XS = [80, 205, 330, 455], T = 6;
+  for (const [gi, g] of G.entries()){
+    const svg = panel("pA", g, "0 0 560 470"); blurDef(svg, "blurA" + gi, 0.9);
+    const n = coinsFor(g, UNIT);  // after, p, m, c
+    const rim = c => c === g.dark ? "#2a1205" : shade(c, -0.25);
+    // order bottom->top above the line: after, cache, mix, prompts (top goes first)
+    const order = [[0, g.dark], [3, g.shades[2]], [2, g.shades[1]], [1, g.shades[0]]];
+    el("line", {x1: 20, x2: 540, y1: HZ + 2, y2: HZ + 2, stroke: g.color, "stroke-width": 1.5}, svg);
+    XS.forEach((x, step) => {
+      // above: coins still in the bill at this step
+      let k = 0;
+      for (const [idx, c] of order){
+        if (idx > 0 && idx <= step) continue;
+        for (let j = 0; j < n[idx]; j++, k++) coin(svg, x, HZ - k * T, c, shade(c, idx === 0 ? -0.35 : -0.18));
+      }
+      const top = HZ - k * T - 7;
+      el("text", {x, y: top - 10, "text-anchor": "middle", "font-size": 14, "font-weight": 700, fill: "#1A1A1A"}, svg, money(remain(g)[step]));
+      // below: coins saved so far, sinking (most recent habit nearest the line), fading & blurred
+      const sunk = el("g", {filter: `url(#blurA${gi})`}, svg);
+      let d = 0;
+      for (let h = step; h >= 1; h--){
+        for (let j = 0; j < n[h]; j++, d++){
+          const yb = HZ + 16 + d * T;
+          coin(sunk, x, yb, g.shades[h - 1], shade(g.shades[h - 1], -0.18), Math.max(0.25, 0.9 - d * 0.05));
+        }
+      }
+      el("text", {x, y: 462, "text-anchor": "middle", "font-size": 12, fill: "#4A4A4A"}, svg, STEPS[step]);
+      if (step > 0){
+        const mx = (XS[step - 1] + x) / 2, yy = HZ - (n[0] + 4) * T - 30 - (3 - step) * 0;
+        el("text", {x: mx, y: HZ + 30, "text-anchor": "middle", "font-size": 12.5, "font-weight": 700, fill: shade(g.shades[step - 1], -0.35)}, svg, "−" + money(g.parts[step - 1]));
+      }
+    });
+    el("text", {x: 540, y: 26, "text-anchor": "end", "font-family": "Space Grotesk", "font-size": 24, "font-weight": 700, fill: g.color}, svg, "Saves " + money(g.total));
+    el("text", {x: 540, y: 46, "text-anchor": "end", "font-size": 12.5, "font-weight": 700, fill: g.color}, svg, `−${Math.round(g.total / g.before * 100)}% cost · −${g.kwh}% energy`);
+    el("text", {x: 20, y: 26, "font-size": 12, fill: "#6B6B6B"}, svg, "1 coin = $50");
+  }
+}
+
+// ---------------- D: stacks of money ----------------
+function bundle(svg, x, y, c, top, op){  // y = bottom-front edge; oblique depth to the upper right
+  const W = 76, T = 6, DX = 16, DY = -9, x0 = x - W / 2 - DX / 2, x1 = x0 + W;
+  const g = el("g", {opacity: op ?? 1}, svg);
+  el("path", {d: `M${x0} ${y} L${x1} ${y} L${x1} ${y - T} L${x0} ${y - T} Z`, fill: c}, g);                                   // front
+  el("path", {d: `M${x1} ${y} L${x1 + DX} ${y + DY} L${x1 + DX} ${y + DY - T} L${x1} ${y - T} Z`, fill: shade(c, -0.22)}, g); // side
+  el("line", {x1: x0 + 3, x2: x1 - 3, y1: y - T / 2, y2: y - T / 2, stroke: shade(c, 0.35), "stroke-width": 0.8}, g);         // bill edges
+  el("rect", {x: x - DX / 2 - 5, y: y - T + 0.6, width: 10, height: T - 1.2, fill: "#E9E1CF"}, g);                         // paper band
+  el("line", {x1: x0, x2: x1, y1: y - T, y2: y - T, stroke: shade(c, -0.4), "stroke-width": 0.7}, g);                       // gap between bundles
+  if (top){
+    el("path", {d: `M${x0} ${y - T} L${x1} ${y - T} L${x1 + DX} ${y - T + DY} L${x0 + DX} ${y - T + DY} Z`, fill: shade(c, 0.18)}, g);
+    const cx = x - DX / 2 + DX / 2, cy = y - T + DY / 2;
+    el("path", {d: `M${x0 + 8} ${y - T - 1.5} L${x1 - 6} ${y - T - 1.5} L${x1 + DX - 8} ${y - T + DY + 1.5} L${x0 + DX + 6} ${y - T + DY + 1.5} Z`, fill: "none", stroke: shade(c, 0.5), "stroke-width": 0.8}, g);
+    el("rect", {x: x - DX / 2 - 7 + 3, y: cy - 1.5, width: 14, height: 3, fill: "#F4EFE4", transform: `skewX(-40)`, "transform-origin": `${cx} ${cy}`}, g);
+    el("text", {x: cx + 18, y: cy + 3, "text-anchor": "middle", "font-size": 8, "font-weight": 700, fill: shade(c, 0.6)}, g, "$");
+  }
+  return g;
+}
+function drawD(){
+  legend("lgD", "");
+  const UNIT = 50, HZ = 300, XS = [78, 203, 328, 453], T = 6;
+  for (const [gi, g] of G.entries()){
+    const svg = panel("pD", g, "0 0 560 470"); blurDef(svg, "blurD" + gi, 0.7);
+    const n = coinsFor(g, UNIT);
+    const order = [[0, g.dark], [3, g.shades[2]], [2, g.shades[1]], [1, g.shades[0]]];
+    el("line", {x1: 20, x2: 540, y1: HZ + 1, y2: HZ + 1, stroke: g.color, "stroke-width": 1.5}, svg);
+    XS.forEach((x, step) => {
+      const list = [];
+      for (const [idx, c] of order){ if (idx > 0 && idx <= step) continue; for (let j = 0; j < n[idx]; j++) list.push(c); }
+      list.forEach((c, k) => bundle(svg, x, HZ - k * T, c, k === list.length - 1));
+      const top = HZ - list.length * T - 12;
+      el("text", {x: x - 4, y: top - 10, "text-anchor": "middle", "font-size": 14, "font-weight": 700, fill: "#1A1A1A"}, svg, money(remain(g)[step]));
+      const sunk = el("g", {filter: `url(#blurD${gi})`}, svg); let d = 0;
+      for (let h = step; h >= 1; h--) for (let j = 0; j < n[h]; j++, d++) bundle(sunk, x, HZ + 16 + d * T, g.shades[h - 1], false, Math.max(0.25, 0.9 - d * 0.05));
+      el("text", {x: x - 4, y: 462, "text-anchor": "middle", "font-size": 12, fill: "#4A4A4A"}, svg, STEPS[step]);
+      if (step > 0) el("text", {x: x - 4, y: HZ + 16 + d * T + 26, "text-anchor": "middle", "font-size": 12, "font-weight": 700, fill: shade(g.shades[step - 1], -0.35)}, svg, "−" + money(g.parts[step - 1]) + " " + HAB[step - 1]);
+    });
+    el("text", {x: 540, y: 26, "text-anchor": "end", "font-family": "Space Grotesk", "font-size": 24, "font-weight": 700, fill: g.color}, svg, "Saves " + money(g.total));
+    el("text", {x: 540, y: 46, "text-anchor": "end", "font-size": 12.5, "font-weight": 700, fill: g.color}, svg, `−${Math.round(g.total / g.before * 100)}% cost · −${g.kwh}% energy`);
+    el("text", {x: 20, y: 26, "font-size": 12, fill: "#6B6B6B"}, svg, "1 bundle = $50");
+  }
+}
+
+// ---------------- B: receipts ----------------
+function zig(x0, x1, y, up){ let d = "", n = 8, w = (x1 - x0) / n; for (let i = 0; i <= n; i++) d += ` L${(x0 + i * w).toFixed(1)} ${(y + (i % 2 ? (up ? -5 : 5) : 0)).toFixed(1)}`; return d; }
+function drawB(){
+  legend("lgB", "");
+  document.querySelector("#lgB .sw").style.cssText = "background:linear-gradient(90deg,#FBF6F1 50%,#F3F6FB 50%);box-shadow:inset 0 0 0 1px #D6D4CC";
+  document.querySelector("#lgB span span").nextSibling.textContent = "Still spent (the receipt that stays)";
+  const TOP = 56, MAXH = 250, sc = MAXH / G[0].before, XS = [70, 190, 310, 430], W = 84;
+  for (const [gi, g] of G.entries()){
+    const svg = panel("pB", g, "0 0 560 470");
+    const R = remain(g);
+    XS.forEach((x, step) => {
+      const h = R[step] * sc, x0 = x - W / 2, x1 = x + W / 2;
+      // receipt body, segmented: after (paper) then the habit strips still on the bill
+      const segs = [[g.after, g.paper, "stay"]];
+      for (let i = 2; i >= step; i--) if (i < 3 && i >= step) segs.push([g.parts[i], g.shades[i], "hab"]);
+      // order top->bottom: after, then parts[2], parts[1], parts[0] (prompt strip at the bottom tears first)
+      const seq = [[g.after, g.paper]]; for (let i = 2; i >= 0; i--) if (i >= step) seq.push([g.parts[i], g.shades[i]]);
+      let y = TOP;
+      el("path", {d: `M${x0} ${TOP - 8} L${x1} ${TOP - 8}`, stroke: "#9A9A93", "stroke-width": 3, "stroke-linecap": "round"}, svg);
+      seq.forEach(([v, c], si) => {
+        const hh = v * sc, last = si === seq.length - 1;
+        const d = `M${x0} ${y} L${x1} ${y} L${x1} ${y + hh}` + (last ? zig(x1, x0, y + hh, false).replace(/^ L[^L]*/, "") : ` L${x0} ${y + hh}`) + " Z";
+        el("path", {d: last ? `M${x0} ${y} L${x1} ${y} L${x1} ${y + hh}${zig(x1, x0, y + hh, false)} Z` : d, fill: c, stroke: "#D6D4CC", "stroke-width": 1}, svg);
+        if (si === 0) for (let ly = y + 16; ly < y + hh - 10; ly += 11) el("line", {x1: x0 + 10, x2: x1 - (ly % 3 ? 14 : 28), y1: ly, y2: ly, stroke: "#D9D6CD", "stroke-width": 2, "stroke-linecap": "round"}, svg);
+        y += hh;
+      });
+      el("text", {x, y: TOP - 18, "text-anchor": "middle", "font-size": 14, "font-weight": 700, fill: "#1A1A1A"}, svg, money(R[step]));
+      el("text", {x, y: 462, "text-anchor": "middle", "font-size": 12, fill: "#4A4A4A"}, svg, STEPS[step]);
+      // torn strip of this step, falling below the previous receipt edge
+      if (step > 0){
+        const v = g.parts[step - 1], hh = v * sc, px = (XS[step - 1] + x) / 2, py = TOP + R[step] * sc + 26 + step * 6;
+        const gg = el("g", {transform: `rotate(${step % 2 ? -9 : 8} ${px} ${py + hh / 2})`, opacity: 0.92}, svg);
+        el("path", {d: `M${px - W / 2 + 8} ${py}${zig(px - W / 2 + 8, px + W / 2 - 8, py, true)} L${px + W / 2 - 8} ${py + hh}${zig(px + W / 2 - 8, px - W / 2 + 8, py + hh, false)} Z`, fill: g.shades[step - 1], stroke: "#D6D4CC"}, gg);
+        el("text", {x: px, y: py + hh + 22, "text-anchor": "middle", "font-size": 12.5, "font-weight": 700, fill: shade(g.shades[step - 1], -0.35)}, svg, "−" + money(v) + " " + HAB[step - 1]);
+      }
+    });
+    el("text", {x: 548, y: 400, "text-anchor": "end", "font-family": "Space Grotesk", "font-size": 24, "font-weight": 700, fill: g.color}, svg, "Saves " + money(g.total));
+    el("text", {x: 548, y: 420, "text-anchor": "end", "font-size": 12.5, "font-weight": 700, fill: g.color}, svg, `−${Math.round(g.total / g.before * 100)}% cost · −${g.kwh}% energy`);
+  }
+}
+
+// ---------------- C: stepped sunset ----------------
+function segArea(r, h){ h = Math.max(0, Math.min(2 * r, h)); return r * r * Math.acos((r - h) / r) - (r - h) * Math.sqrt(2 * r * h - h * h); }
+function solveH(r, f){ let lo = 0, hi = 2 * r, t = f * Math.PI * r * r; for (let i = 0; i < 60; i++){ const m = (lo + hi) / 2; segArea(r, m) < t ? lo = m : hi = m; } return (lo + hi) / 2; }
+function slab(cx, cy, r, y1, y2){
+  const w1 = Math.sqrt(Math.max(0, r * r - (y1 - cy) ** 2)), w2 = Math.sqrt(Math.max(0, r * r - (y2 - cy) ** 2)), f = v => v.toFixed(1);
+  return `M${f(cx - w1)} ${f(y1)} L${f(cx + w1)} ${f(y1)} A${f(r)} ${f(r)} 0 0 1 ${f(cx + w2)} ${f(y2)} L${f(cx - w2)} ${f(y2)} A${f(r)} ${f(r)} 0 0 1 ${f(cx - w1)} ${f(y1)} Z`;
+}
+function drawC(){
+  legend("lgC", "border-radius:50%");
+  const K = 56 / Math.sqrt(G[0].before), HZ = 150, XS = [72, 202, 332, 462];
+  for (const [gi, g] of G.entries()){
+    const svg = panel("pC", g, "0 0 560 300"); blurDef(svg, "blurC" + gi, 4);
+    const r = K * Math.sqrt(g.before), R = remain(g);
+    const defs = svg.querySelector("defs"); const cp = el("clipPath", {id: "clipC" + gi}, defs); el("rect", {x: 0, y: HZ, width: 560, height: 200}, cp);
+    el("line", {x1: 10, x2: 550, y1: HZ, y2: HZ, stroke: g.color, "stroke-width": 1.5}, svg);
+    XS.forEach((x, step) => {
+      const keep = R[step] / g.before, h = solveH(r, keep), cy = HZ - h + r;
+      // below the line: saved so far, banded by habit (first habit nearest the line)
+      const below = el("g", {"clip-path": `url(#clipC${gi})`}, svg), bl = el("g", {filter: `url(#blurC${gi})`, opacity: .85}, below);
+      let acc = keep, y = HZ;
+      for (let i = 0; i < step; i++){
+        acc += g.parts[i] / g.before;
+        const y2 = acc >= 0.9999 ? cy + r : (cy - r) + solveH(r, acc);
+        el("path", {d: slab(x, cy, r, y, y2), fill: g.shades[i]}, bl); y = y2;
+      }
+      el("path", {d: slab(x, cy, r, cy - r, HZ), fill: g.dark}, svg);
+      el("circle", {cx: x, cy, r, fill: "none", stroke: "#1A1A1A", "stroke-dasharray": "3 4", opacity: .4}, svg);
+      el("text", {x, y: HZ - h - 12, "text-anchor": "middle", "font-size": 14, "font-weight": 700, fill: "#1A1A1A"}, svg, money(R[step]));
+      el("text", {x, y: 292, "text-anchor": "middle", "font-size": 12, fill: "#4A4A4A"}, svg, STEPS[step]);
+      if (step > 0) el("text", {x: (XS[step - 1] + x) / 2, y: HZ + 52, "text-anchor": "middle", "font-size": 12.5, "font-weight": 700, fill: shade(g.shades[step - 1], -0.35)}, svg, "−" + money(g.parts[step - 1]));
+    });
+    el("text", {x: 548, y: 26, "text-anchor": "end", "font-family": "Space Grotesk", "font-size": 24, "font-weight": 700, fill: g.color}, svg, "Saves " + money(g.total));
+    el("text", {x: 548, y: 46, "text-anchor": "end", "font-size": 12.5, "font-weight": 700, fill: g.color}, svg, `−${Math.round(g.total / g.before * 100)}% cost · −${g.kwh}% energy`);
+  }
+}
+function shade(hex, amt){ const n = parseInt(hex.slice(1), 16); let r = n >> 16, g = n >> 8 & 255, b = n & 255; const f = c => Math.round(amt < 0 ? c * (1 + amt) : c + (255 - c) * amt); return "#" + [f(r), f(g), f(b)].map(c => c.toString(16).padStart(2, "0")).join(""); }
+drawD(); drawA(); drawB(); drawC();
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+param,value,note
+global_cache_step_points,0.10,"PER-UNIT SIZE, not a target (D23): +10 percentage points of token-weighted cache share for every tenant. Provider guidance says to put stable content first (config/guidance_sources.csv G1) but gives no campus target, so we report the effect of one step. Readers scale linearly-ish"
+global_reasoning_route_step,0.10,"PER-UNIT SIZE, not a target (D23): 10% of each tenant's o1-preview calls answered by gpt-4o. Calls moved = smallest visible output first. Hidden reasoning tokens dropped, visible output kept. The data ceiling (up to ~75%) is printed separately and is never a target"
+local_target_rule,same_provider_average,"D24: local-good targets = average of the baseline tenants on the same provider (what CMU's other teams already do). Replaced best-of-4"
+local_route_selection,smallest_output,"Calls moved down a tier (local-good model mix) are those with the smallest output = proxy for routine tasks"

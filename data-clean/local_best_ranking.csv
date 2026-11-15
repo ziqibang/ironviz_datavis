@@ -1,0 +1,5 @@
+tenant_id,provider,pct_400,pct_429,cache_share_pct,pct_calls_any_cache,median_input_tokens,pct_calls_premium_model,pct_calls_reasoning_model,cost_per_success_usd,wh_per_success_central,gco2e_per_success_central,persona_label,mean_rank
+org-prod-core,openai,1.2421,2.1432,22.6263,44.4642,4252.0,52.6603,9.6281,0.0364,1.8978,0.6642,Core Production Services,1.625
+org-marketing-ai,openai,1.1123,1.8427,22.4204,44.1467,4315.5,53.2759,10.3667,0.0383,1.9388,0.6786,Marketing / Communications,2.75
+prj-ai-enterprise-prod,gemini,1.1611,2.268,18.7959,37.2663,3692.5,47.374,0.0,0.0106,1.6919,0.5922,Enterprise Production,2.75
+prj-ai-r-and-d,gemini,1.1148,2.0613,19.364,37.894,3692.0,47.5578,0.0,0.0106,1.6939,0.5929,Researchers (R&D),2.875

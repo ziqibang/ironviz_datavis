@@ -1,0 +1,58 @@
+{
+ "pct": {
+  "requests": {
+   "o1-preview": 9.965,
+   "gpt-4o": 48.092,
+   "gpt-4o-mini": 41.943
+  },
+  "cost": {
+   "o1-preview": 65.052,
+   "gpt-4o": 34.027,
+   "gpt-4o-mini": 0.921
+  },
+  "energy": {
+   "o1-preview": 32.291,
+   "gpt-4o": 42.01,
+   "gpt-4o-mini": 25.699
+  }
+ },
+ "squares": {
+  "requests": {
+   "o1-preview": 10,
+   "gpt-4o": 48,
+   "gpt-4o-mini": 42
+  },
+  "cost": {
+   "o1-preview": 65,
+   "gpt-4o": 34,
+   "gpt-4o-mini": 1
+  },
+  "energy": {
+   "o1-preview": 32,
+   "gpt-4o": 42,
+   "gpt-4o-mini": 26
+  }
+ },
+ "per_request": {
+  "o1-preview": {
+   "usd": 0.28172140252795336,
+   "wh": 6.603949829215076,
+   "wh_lo": 4.753823469877408,
+   "wh_hi": 8.454076188552744
+  },
+  "gpt-4o": {
+   "usd": 0.03053422168385849,
+   "wh": 1.780299135421454,
+   "wh_lo": 1.269783764911522,
+   "wh_hi": 2.2908145059313854
+  },
+  "gpt-4o-mini": {
+   "usd": 0.0009479969854469854,
+   "wh": 1.2487086244937318,
+   "wh_lo": 0.900465561638576,
+   "wh_hi": 1.5969516873488872
+  }
+ },
+ "n_requests": 103211,
+ "pricing": "pricing_list"
+}

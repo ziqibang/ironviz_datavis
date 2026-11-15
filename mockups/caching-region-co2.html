@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caching, Grid, Carbon</title>
+<style>
+:root{
+  --page:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --save:#1baf7a; --save-ink:#006300; --accent:#eb6834;
+  --s100:#cde2fb; --s250:#86b6ef; --s400:#3987e5; --s550:#1c5cab; --s700:#0d366b;
+}
+:root[data-theme="dark"]{
+  --page:#0d0d0d; --surface:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --save:#199e70; --save-ink:#0ca30c; --accent:#d95926;
+  --s100:#184f95; --s250:#1c5cab; --s400:#3987e5; --s550:#86b6ef; --s700:#cde2fb;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0d0d0d; --surface:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --save:#199e70; --save-ink:#0ca30c; --accent:#d95926;
+    --s100:#184f95; --s250:#1c5cab; --s400:#3987e5; --s550:#86b6ef; --s700:#cde2fb;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:980px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:26px;line-height:1.25;margin:8px 0 6px}
+h2{font-size:19px;margin:0 0 4px}
+.sub{color:var(--ink2);margin:0 0 18px;max-width:760px}
+.card{background:var(--surface);border:1px solid var(--grid);border-radius:10px;padding:20px;margin:20px 0}
+.tag{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink2);margin-bottom:6px}
+.rec{color:var(--save-ink)}
+.title{font-weight:650;font-size:17px;margin:2px 0 2px}
+.note{color:var(--ink2);font-size:13px;margin:6px 0 0}
+.trade{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;font-size:13px;color:var(--ink2)}
+.trade b{color:var(--ink);display:block}
+@media (max-width:640px){.trade{grid-template-columns:1fr}}
+.eq{font-family:ui-monospace,Consolas,monospace;background:var(--page);border:1px solid var(--grid);border-radius:8px;padding:10px 12px;font-size:14px;margin:10px 0}
+table.mx{border-collapse:separate;border-spacing:2px;width:100%;font-variant-numeric:tabular-nums}
+.mx th{font-size:12px;color:var(--ink2);font-weight:600;text-align:right;padding:6px 8px}
+.mx th:first-child{text-align:left}
+.mx td{padding:10px 8px;text-align:right;border-radius:4px;font-size:15px}
+.mx td.rl{text-align:left;background:none;font-size:13px;color:var(--ink2)}
+.mx td.rl b{color:var(--ink);font-size:14px}
+.mx td.dl{color:var(--save-ink);font-weight:600;background:none}
+.scroll{overflow-x:auto}
+svg text{fill:var(--ink2);font-size:12px}
+svg .lbl{fill:var(--ink);font-size:12px;font-weight:600}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin:8px 0}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px}
+#tip{position:fixed;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--axis);border-radius:6px;padding:6px 9px;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.15);opacity:0;transition:opacity .1s;max-width:260px;z-index:9}
+.warn{border-left:3px solid var(--accent);padding:8px 12px;background:var(--surface);border-radius:0 8px 8px 0;font-size:14px;margin:12px 0}
+ul.lim{font-size:13px;color:var(--ink2);padding-left:18px}
+button.tt{position:fixed;top:12px;right:12px;background:var(--surface);color:var(--ink);border:1px solid var(--axis);border-radius:6px;padding:4px 10px;cursor:pointer}
+</style>
+</head>
+<body>
+<button class="tt" id="tt" aria-label="Toggle theme">◐</button>
+<main>
+<div class="tag">Diagram suggestion · P20 · as of Oct 2026 (synthetic logs) · grid data 2024</div>
+<h1>Caching cuts the energy; the grid decides how much carbon that is worth</h1>
+<p class="sub">Carbon saved by caching = energy saved by caching × how dirty the local grid is. We combine our energy estimate with the 40 Google Cloud region factors from the CodeCarbon repository. Three ways to draw it are below; I recommend <b>B</b>.</p>
+
+<div class="eq">CO₂e saved (g) = kWh saved by caching × grid intensity (gCO₂e / kWh)<br>
+campus, 30 days: caching today saves <b id="k1"></b> kWh · +10 points of reuse would save <b id="k2"></b> kWh more</div>
+
+<div class="warn"><b>Before choosing, three caveats:</b> (1) CodeCarbon's table now lists <b>Google Cloud only</b>; AWS and Azure rows were removed in May 2023 (commit 1a987a4). (2) Our central factor, 350 g/kWh, is Azure/OpenAI from Jegham et al., not CodeCarbon. (3) The logs don't say where requests ran, and CMU can't pick the region for most API calls, so every region here is a <b>what-if</b>.</div>
+
+<!-- A -->
+<section class="card" id="A">
+<div class="tag">Option A · two-dial table</div>
+<div class="title">Moving across the table (more caching) changes carbon by a few percent; moving down (dirtier grid) changes it hundreds of times</div>
+<p class="note">Campus CO₂e per month (kg, central energy). Rows: five reference grids. Columns: caching level. Darker cell = more carbon.</p>
+<div class="scroll"><table class="mx" id="mx"></table></div>
+<div class="trade"><div><b>Prints to PDF</b>Yes</div><div><b>Strength</b>Exact numbers; both levers in one view</div><div><b>Weakness</b>Shows only 5 of 40 regions; table, not picture</div></div>
+</section>
+
+<!-- B -->
+<section class="card" id="B">
+<div class="tag rec">Option B · 40-region strip · recommended</div>
+<div class="title">The same caching habit saves 0.02 kg or 6.2 kg of CO₂e a month, depending on the grid</div>
+<p class="note">Each dot is one Google Cloud region. Position = CO₂e avoided per month if every CMU team reused 10 more points of prompt text (8.5 kWh saved, our estimate). Color = grid intensity. Hover a dot for details.</p>
+<div class="legend"><span><span class="sw" style="background:var(--s100)"></span>cleaner grid</span><span><span class="sw" style="background:var(--s700)"></span>dirtier grid</span><span><span class="sw" style="background:var(--accent)"></span>our central assumption (350 g/kWh, Azure/OpenAI)</span></div>
+<div class="scroll"><svg id="strip" viewBox="0 0 900 250" width="100%" role="img" aria-label="Strip plot of 40 Google Cloud regions. CO2e avoided by a 10-point caching increase ranges from 0.02 kg (Montreal) to 6.2 kg (Warsaw) per month; our central assumption gives 3.0 kg."></svg></div>
+<p class="note">For scale: the same step saves <b id="usd"></b> a month wherever it runs. Caching is mainly a <b>cost</b> lever; its carbon value depends on the grid.</p>
+<div class="trade"><div><b>Prints to PDF</b>Yes (tooltips lost, labels stay)</div><div><b>Strength</b>Uses the whole CodeCarbon table; one clear message</div><div><b>Weakness</b>Readers must accept a what-if (region not in our logs)</div></div>
+</section>
+
+<!-- C -->
+<section class="card" id="C">
+<div class="tag">Option C · one API call, two grids</div>
+<div class="title">One average request emits about 6× more CO₂e in the dirtiest US region than in the cleanest; caching trims about 2%</div>
+<p class="note">Grams CO₂e per successful request (campus average, central energy: <span id="wh"></span>). Clean = us-west1 (The Dalles, OR, 94 g/kWh). Dirty = us-west3 (Salt Lake City, UT, 588 g/kWh), the two ends of the US Google Cloud regions.</p>
+<div class="legend"><span><span class="sw" style="background:var(--s250)"></span>without caching</span><span><span class="sw" style="background:var(--s550)"></span>with today's caching</span></div>
+<div class="scroll"><svg id="pair" viewBox="0 0 900 200" width="100%" role="img" aria-label="Bar chart: one request emits 0.19 g in us-west1 and 1.18 to 1.21 g in us-west3; caching changes each by about 2 percent."></svg></div>
+<div class="trade"><div><b>Prints to PDF</b>Yes</div><div><b>Strength</b>Simplest for students; per-call framing</div><div><b>Weakness</b>Caching difference is almost invisible (honest, but flat)</div></div>
+</section>
+
+<section class="card">
+<div class="title">Sources and limits</div>
+<ul class="lim">
+<li>Grid intensity: CodeCarbon, <code>codecarbon/data/cloud/impact.csv</code>, commit ca104ad (13 Jul 2024), https://github.com/mlco2/codecarbon. Values from Google Cloud, "Carbon free energy for Google Cloud regions," https://cloud.google.com/sustainability/region-carbon. Pinned copy: <code>config/codecarbon_gcp_impact.csv</code>.</li>
+<li>Central factor 350 g/kWh: Jegham et al. 2025, Table 1 (Microsoft Azure, used by OpenAI).</li>
+<li>Energy: our estimate from benchmarks (scripts/06_carbon.py), central value. Range for the whole campus: <span id="kr"></span> kWh per month. Logs are synthetic (Oct 2026).</li>
+<li>Grid factors are annual location-based averages. Providers' own "carbon-free energy" claims and the hour of day both change the real number.</li>
+<li>Numbers: <code>scripts/10_region_caching_co2.py</code> → <code>data-clean/region_caching_co2.csv</code>, <code>viz/region_caching_data.js</code>.</li>
+</ul>
+</section>
+</main>
+<div id="tip"></div>
+<script src="../viz/region_caching_data.js"></script>
+<script>
+const R = window.REGION, NS = "http://www.w3.org/2000/svg";
+const f1 = v => v.toFixed(1), f2 = v => v < 0.1 ? v.toFixed(2) : v.toFixed(1);
+const $ = id => document.getElementById(id);
+$("k1").textContent = f1(R.saved_kwh.today_vs_none);
+$("k2").textContent = f1(R.saved_kwh.plus10);
+$("usd").textContent = "$" + Math.round(R.plus10_usd);
+$("kr").textContent = Math.round(R.kwh_range_today[0]) + "–" + Math.round(R.kwh_range_today[1]);
+$("wh").textContent = R.per_req.wh_cached_today.toFixed(2) + " Wh with caching, " + R.per_req.wh_no_cache.toFixed(2) + " Wh without";
+const tip = $("tip");
+function showTip(e, html){ tip.innerHTML = html; tip.style.opacity = 1; tip.style.left = Math.min(e.clientX + 12, innerWidth - 270) + "px"; tip.style.top = (e.clientY + 12) + "px"; }
+function hideTip(){ tip.style.opacity = 0; }
+function el(tag, attrs, parent, text){ const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (text != null) n.textContent = text; parent && parent.appendChild(n); return n; }
+const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const gmax = Math.max(...R.regions.map(r => r.g_per_kwh));
+function seq(g){ const steps = ["--s100","--s250","--s400","--s550","--s700"]; return cssv(steps[Math.min(4, Math.floor(g / gmax * 4.999))]); }
+const byRegion = k => R.regions.find(r => r.region === k);
+
+function drawA(){
+  const rows = [
+    ["Montréal, Canada", "northamerica-northeast1 · cleanest listed", byRegion("northamerica-northeast1").g_per_kwh],
+    ["The Dalles, Oregon", "us-west1 · cleanest US region", 94],
+    ["Our central assumption", "Azure/OpenAI, Jegham et al. (not CodeCarbon)", R.central_g],
+    ["Salt Lake City, Utah", "us-west3 · dirtiest US region", 588],
+    ["Warsaw, Poland", "europe-central2 · dirtiest listed", byRegion("europe-central2").g_per_kwh],
+  ];
+  const cols = [["No caching", R.kwh.no_caching], ["Today", R.kwh.today], ["+10 pts reuse", R.kwh.plus10_cache]];
+  const max = cols[0][1] * gmax / 1000;
+  let h = "<tr><th>Grid (g CO₂e/kWh)</th>" + cols.map(c => `<th>${c[0]}</th>`).join("") + "<th>Saved by +10 pts</th></tr>";
+  for (const [name, sub, g] of rows){
+    h += `<tr><td class="rl"><b>${name}</b> · ${Math.round(g)} g<br>${sub}</td>`;
+    for (const [, kwh] of cols){
+      const kg = kwh * g / 1000, t = kg / max;
+      const bg = t < .02 ? "transparent" : `color-mix(in srgb, var(--s550) ${Math.round(8 + t * 80)}%, var(--surface))`;
+      const ink = t > .55 ? "#fff" : "var(--ink)";
+      h += `<td style="background:${bg};color:${ink}">${f2(kg)}</td>`;
+    }
+    h += `<td class="dl">−${f2((R.kwh.today - R.kwh.plus10_cache) * g / 1000)}</td></tr>`;
+  }
+  $("mx").innerHTML = h;
+}
+
+function drawB(){
+  const s = $("strip"); s.innerHTML = "";
+  const W = 900, L = 40, Rr = 870, y0 = 150;
+  const max = 7, x = v => L + v / max * (Rr - L);
+  for (let t = 0; t <= max; t++){
+    el("line", {x1:x(t), x2:x(t), y1:60, y2:y0 + 20, stroke:cssv("--grid")}, s);
+    el("text", {x:x(t), y:y0 + 38, "text-anchor":"middle"}, s, t + " kg");
+  }
+  el("text", {x:L, y:y0 + 60}, s, "CO₂e avoided per month by +10 points of reused prompt text (campus, 30 days)");
+  // beeswarm-lite: stack dots that overlap
+  const placed = [];
+  const pts = R.regions.map(r => ({r, cx: x(r.kg_saved_plus10)}));
+  for (const p of pts){
+    let lvl = 0; while (placed.some(q => q.lvl === lvl && Math.abs(q.cx - p.cx) < 13)) lvl++;
+    p.lvl = lvl; placed.push(p);
+  }
+  for (const p of pts){
+    const cy = y0 - p.lvl * 13;
+    const c = el("circle", {cx:p.cx, cy, r:6, fill:seq(p.r.g_per_kwh), stroke:cssv("--surface"), "stroke-width":2}, s);
+    const hit = el("circle", {cx:p.cx, cy, r:9, fill:"transparent"}, s);
+    hit.addEventListener("mousemove", e => showTip(e, `<b>${p.r.city}, ${p.r.country}</b><br>${p.r.region}<br>${p.r.g_per_kwh} g CO₂e/kWh<br>+10 pts caching avoids <b>${f2(p.r.kg_saved_plus10)} kg</b>/month<br>campus total here: ${f1(p.r.campus_kg_today)} kg/month`));
+    hit.addEventListener("mouseleave", hideTip);
+  }
+  // central assumption marker
+  const cx = x(R.saved_kwh.plus10 * R.central_g / 1000);
+  el("line", {x1:cx, x2:cx, y1:28, y2:y0 + 8, stroke:cssv("--accent"), "stroke-width":2, "stroke-dasharray":"4 3"}, s);
+  el("text", {x:cx + 6, y:36, class:"lbl"}, s, `Our central: ${f1(R.saved_kwh.plus10 * R.central_g / 1000)} kg`);
+  const ann = [["northamerica-northeast1","Montréal","start"],["us-west1","The Dalles OR","start"],["us-west3","Salt Lake City","end"],["europe-central2","Warsaw","end"]];
+  for (const [k, name, anchor] of ann){
+    const p = pts.find(q => q.r.region === k); const cy = y0 - p.lvl * 13;
+    const ly = (name === "The Dalles OR" || name === "Warsaw") ? 92 : 72;
+    el("line", {x1:p.cx, x2:p.cx, y1:ly + 4, y2:cy - 8, stroke:cssv("--axis")}, s);
+    el("text", {x:p.cx + (anchor === "start" ? -2 : anchor === "end" ? 2 : 0), y:ly, "text-anchor":anchor, class:"lbl"}, s, `${name} ${f2(p.r.kg_saved_plus10)} kg`);
+  }
+}
+
+function drawC(){
+  const s = $("pair"); s.innerHTML = "";
+  const grids = [["Clean: us-west1 (The Dalles, OR) · 94 g/kWh", 94], ["Dirty: us-west3 (Salt Lake City, UT) · 588 g/kWh", 588]];
+  const L = 20, Rr = 760, max = 1.3, x = v => L + v / max * (Rr - L);
+  let y = 22;
+  for (const [name, g] of grids){
+    el("text", {x:L, y, class:"lbl"}, s, name); y += 8;
+    for (const [lab, wh, col] of [["without caching", R.per_req.wh_no_cache, "--s250"], ["with today's caching", R.per_req.wh_cached_today, "--s550"]]){
+      const v = wh * g / 1000;
+      const r = el("rect", {x:L, y, width:x(v) - L, height:18, rx:4, fill:cssv(col)}, s);
+      el("text", {x:x(v) + 6, y:y + 13}, s, `${v.toFixed(3)} g · ${lab}`);
+      r.addEventListener("mousemove", e => showTip(e, `<b>${name}</b><br>${lab}: ${v.toFixed(3)} g CO₂e per request<br>(${wh.toFixed(2)} Wh × ${g} g/kWh)`));
+      r.addEventListener("mouseleave", hideTip);
+      y += 24;
+    }
+    y += 22;
+  }
+}
+function drawAll(){ drawA(); drawB(); drawC(); }
+drawAll();
+$("tt").onclick = () => { const d = document.documentElement; const dark = d.dataset.theme ? d.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; d.dataset.theme = dark ? "light" : "dark"; drawAll(); };
+</script>
+</body>
+</html>

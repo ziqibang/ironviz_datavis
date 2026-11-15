@@ -1,0 +1,12 @@
+param,value,note
+model_map:gpt-4o,gpt-4o,direct match
+model_map:gpt-4o-mini,gpt-4o-mini,direct match
+model_map:o1-preview,o1,PROXY: o1-preview not benchmarked; o1 is its successor in the same reasoning family
+model_map:gemini-1.5-pro,gpt-4o,PROXY: no Gemini rows in Jegham et al.; frontier-tier model mapped to frontier-tier
+model_map:gemini-1.5-flash,gpt-4o-mini,PROXY: no Gemini rows in Jegham et al.; small/fast tier mapped to small tier
+low_energy_scale,0.5674,"Google measured median Gemini Apps text prompt 0.24 Wh (Elsworth et al. 2025, arXiv:2508.15734, comprehensive method, May 2025) / Jegham GPT-4o short query 0.423 Wh. ASSUMPTION: treats Google's measured fleet efficiency as the optimistic bound"
+cached_input_energy_share_low,0.0,"Cached prefix skips most prefill compute (assumption: ~0% of normal input energy)"
+cached_input_energy_share_high,0.5,"Conservative assumption: cached tokens still cost half of normal input energy"
+grid_g_per_kwh_low,94,"CodeCarbon cloud/impact.csv, GCP us-west1 (cleanest US GCP region listed) https://github.com/mlco2/codecarbon/blob/master/codecarbon/data/cloud/impact.csv"
+grid_g_per_kwh_central,350,"Jegham et al. 2025 Table 1 CIF for Microsoft Azure (OpenAI) 0.35 kgCO2e/kWh"
+grid_g_per_kwh_high,588,"CodeCarbon cloud/impact.csv, GCP us-west3 (dirtiest US GCP region listed)"

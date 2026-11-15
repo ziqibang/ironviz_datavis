@@ -1,0 +1,43 @@
+pair,scope,metric,a,b,rel_diff_pct,ci95_low,ci95_high,p_value,statistically_clear,practically_meaningful
+org-prod-core vs org-marketing-ai,all models,% calls HTTP 400,1.2421,1.1123,11.7,-0.0275,0.2872,0.11,False,False
+org-prod-core vs org-marketing-ai,all models,% calls HTTP 429,2.1432,1.8427,16.3,0.0966,0.5044,0.0039,True,True
+org-prod-core vs org-marketing-ai,gpt-4o,% of successful calls on this model,43.0322,42.9093,0.3,-0.611,0.8568,0.74,False,False
+org-prod-core vs org-marketing-ai,gpt-4o-mini,% of successful calls on this model,47.3397,46.7241,1.3,-0.1243,1.3556,0.1,False,False
+org-prod-core vs org-marketing-ai,o1-preview,% of successful calls on this model,9.6281,10.3667,-7.1,-1.1832,-0.2939,0.0011,True,False
+org-prod-core vs org-marketing-ai,gpt-4o,median input tokens,6008.0,6023.0,-0.2,-63.0,35.0,,False,False
+org-prod-core vs org-marketing-ai,gpt-4o,median output tokens,1296.0,1295.0,0.1,-11.0,12.0,,False,False
+org-prod-core vs org-marketing-ai,gpt-4o,median cost per successful call (USD),0.0265,0.0264,0.1,-0.0001,0.0002,,False,False
+org-prod-core vs org-marketing-ai,gpt-4o,p90 input tokens,8324.2,8284.0,0.5,-30.415,94.51,,False,False
+org-prod-core vs org-marketing-ai,gpt-4o,% calls with any cache hit,37.4325,36.8638,1.5,-0.5241,1.6614,0.31,False,False
+org-prod-core vs org-marketing-ai,gpt-4o,median cache share when cache is used (%),52.2768,52.5518,-0.5,-1.1174,0.5513,,False,False
+org-prod-core vs org-marketing-ai,gpt-4o-mini,median input tokens,2990.5,3015.0,-0.8,-49.0,7.0,,False,False
+org-prod-core vs org-marketing-ai,gpt-4o-mini,median output tokens,804.0,804.0,0.0,-8.0,6.0,,False,False
+org-prod-core vs org-marketing-ai,gpt-4o-mini,median cost per successful call (USD),0.0009,0.0009,-0.3,-0.0,0.0,,False,False
+org-prod-core vs org-marketing-ai,gpt-4o-mini,p90 input tokens,4261.5,4286.0,-0.6,-60.5,10.7,,False,False
+org-prod-core vs org-marketing-ai,gpt-4o-mini,% calls with any cache hit,50.3092,50.3722,-0.1,-1.1439,1.0178,0.91,False,False
+org-prod-core vs org-marketing-ai,gpt-4o-mini,median cache share when cache is used (%),52.7878,52.5777,0.4,-0.5548,0.8947,,False,False
+org-prod-core vs org-marketing-ai,o1-preview,median input tokens,7955.0,8073.0,-1.5,-223.025,7.05,,False,False
+org-prod-core vs org-marketing-ai,o1-preview,median output tokens,2497.0,2489.0,0.3,-41.0,59.0,,False,False
+org-prod-core vs org-marketing-ai,o1-preview,median cost per successful call (USD),0.2543,0.2565,-0.9,-0.0059,0.001,,False,False
+org-prod-core vs org-marketing-ai,o1-preview,p90 input tokens,10484.6,10562.0,-0.7,-245.205,79.01,,False,False
+org-prod-core vs org-marketing-ai,o1-preview,% calls with any cache hit,47.1535,46.2321,2.0,-1.4195,3.2623,0.44,False,False
+org-prod-core vs org-marketing-ai,o1-preview,median cache share when cache is used (%),52.5626,53.7303,-2.2,-2.4602,0.1725,,False,False
+org-prod-core vs org-marketing-ai,o1-preview,median reasoning share of output (%),59.9382,59.0706,1.5,-0.2112,1.6974,,False,False
+org-prod-core vs org-marketing-ai,all models,mean cost per successful call (USD),0.0364,0.0383,-5.1,-0.0031,-0.0008,,True,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,all models,% calls HTTP 400,1.1611,1.1148,4.2,-0.1196,0.2122,0.58,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,all models,% calls HTTP 429,2.268,2.0613,10.0,-0.0209,0.4343,0.075,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-flash,% of successful calls on this model,52.626,52.4422,0.4,-0.6103,0.978,0.65,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-pro,% of successful calls on this model,47.374,47.5578,-0.4,-0.978,0.6103,0.65,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-flash,median input tokens,2504.0,2494.0,0.4,-13.0,31.0,,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-flash,median output tokens,600.0,598.0,0.3,-4.0,8.0,,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-flash,median cost per successful call (USD),0.0003,0.0003,0.3,-0.0,0.0,,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-flash,p90 input tokens,3532.0,3510.0,0.6,-14.1075,50.0,,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-flash,% calls with any cache hit,38.1936,38.5813,-1.0,-1.4548,0.6793,0.48,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-flash,median cache share when cache is used (%),49.9688,49.6881,0.6,-0.4843,0.8938,,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-pro,median input tokens,11981.5,12038.5,-0.5,-175.0,68.0,,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-pro,median output tokens,1798.0,1802.0,-0.2,-17.5,11.0,,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-pro,median cost per successful call (USD),0.0217,0.0216,0.3,-0.0001,0.0002,,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-pro,p90 input tokens,17198.8,17090.3,0.6,-47.22,266.025,,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-pro,% calls with any cache hit,36.2362,37.1362,-2.4,-2.0124,0.2125,0.11,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,gemini-1.5-pro,median cache share when cache is used (%),49.8085,50.022,-0.4,-1.0649,0.5247,,False,False
+prj-ai-enterprise-prod vs prj-ai-r-and-d,all models,mean cost per successful call (USD),0.0106,0.0106,-0.2,-0.0002,0.0002,,False,False

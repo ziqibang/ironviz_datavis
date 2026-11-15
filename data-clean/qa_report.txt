@@ -1,0 +1,15 @@
+raw rows (openai, gemini): {'openai': 108450, 'gemini': 94200}
+unified rows: 202650
+duplicate call_id: 0
+unmapped tenants: 0
+status codes: {np.int64(200): 192854, np.int64(400): 5672, np.int64(429): 4124}
+success rows with unparseable usage: 0
+failed rows with non-null usage (should be 0): 0
+failed rows missing error payload: 0
+cached > input (violates subset rule): 0
+total != input + output: 0
+openai reasoning > output: 0
+negative token values: 0
+date range: 2026-10-01 00:00:00.124906+00:00 -> 2026-10-30 23:59:36.290668+00:00
+distinct dates: 30
+error type x message: {('gemini', 400, 'INVALID_ARGUMENT', 'Invalid argument provided in request payload or unsupported prompt structure.'): 2605, ('gemini', 429, 'RESOURCE_EXHAUSTED', 'Rate limit exceeded. RPM limits breached.'): 1952, ('openai', 400, 'invalid_request_error', 'Invalid prompt formatting or missing required parameters.'): 3067, ('openai', 429, 'rate_limit_exceeded', 'Rate limit exceeded. RPM limits breached.'): 2172}

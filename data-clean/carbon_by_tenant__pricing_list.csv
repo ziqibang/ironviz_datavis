@@ -1,0 +1,7 @@
+tenant_id,persona_label,calls,wh_per_call_low,wh_per_call_central,wh_per_call_high,kwh_30d_low,kwh_30d_central,kwh_30d_high,kgco2e_30d_low,kgco2e_30d_central,kgco2e_30d_high,wh_per_1k_tokens_central,cache_avoided_kwh_central,cache_avoided_pct_central,share_energy_from_proxy_models_pct
+org-engineering-dev,Engineering / Developers,33291,1.653,2.2893,2.9256,55.0301,76.2129,97.3957,5.1728,26.6745,57.2687,0.2369,0.4369,0.57,29.9221
+org-marketing-ai,Marketing / Communications,35074,1.3859,1.9388,2.4916,48.6105,68.0008,87.3911,4.5694,23.8003,51.3859,0.3225,1.8345,2.6269,34.5354
+org-prod-core,Core Production Services,34846,1.3563,1.8978,2.4394,47.2606,66.1315,85.0023,4.4425,23.146,49.9813,0.3189,1.8242,2.6844,32.7117
+prj-ai-enterprise-prod,Enterprise Production,30274,1.1989,1.6919,2.1849,36.2954,51.22,66.1445,3.4118,17.927,38.893,0.207,2.3233,4.3391,100.0
+prj-ai-r-and-d,Researchers (R&D),30485,1.1993,1.6939,2.1885,36.5616,51.6392,66.7169,3.4368,18.0737,39.2295,0.2065,2.4334,4.5003,100.0
+prj-ai-sandbox-testing,Sandbox Testers,28884,1.8296,2.5373,3.245,52.8455,73.2864,93.7274,4.9675,25.6502,55.1117,0.1667,0.631,0.8537,100.0

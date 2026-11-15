@@ -1,0 +1,4 @@
+benchmark_model,short_wh,medium_wh,long_wh,source
+gpt-4o,0.423,1.215,2.875,"Jegham et al. 2025, How Hungry is AI?, arXiv:2505.09598v5 (11 Nov 2025), Table 4 (GPT-4o Mar '25). short=100in/300out, medium=1000in/1000out, long=10000in/1500out tokens"
+gpt-4o-mini,0.577,1.897,3.098,"Jegham et al. 2025, arXiv:2505.09598v5, Table 4 (GPT-4o mini; authors assume A100 hardware)"
+o1,2.268,4.047,6.181,"Jegham et al. 2025, arXiv:2505.09598v5, Table 4 (o1)"

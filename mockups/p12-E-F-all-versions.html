@@ -1,0 +1,1014 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P12 Options E and F</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap">
+<style>
+
+/* Layout: single review column; four variant panels (E2, E3, F2, F3), each = takeaway title, one visual with the key point annotated, trade-offs */
+:root {
+  --bg: #f7f8f7; --surface: #ffffff; --fg: #141716; --fg2: #4d5552; --muted: #7b8480;
+  --rule: #dfe3e1; --grid: #eceeed; --chip: #eef1f0;
+  --frontier: #2a78d6; --reasoning: #eb6834; --small: #1baf7a;
+  --hi: #eb6834; --base: #9aa3a0; --good: #0a7d4b; --far: #c4321f;
+  --display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --body: "Inter", "Segoe UI", system-ui, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121413; --surface: #1a1d1c; --fg: #eef0ef; --fg2: #c0c6c3; --muted: #8d9692;
+  --rule: #2c3130; --grid: #242827; --chip: #242827;
+  --frontier: #3987e5; --reasoning: #d95926; --small: #199e70;
+  --hi: #e0682f; --base: #6b7471; --good: #3fb67c; --far: #ef6a57; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121413; --surface: #1a1d1c; --fg: #eef0ef; --fg2: #c0c6c3; --muted: #8d9692;
+  --rule: #2c3130; --grid: #242827; --chip: #242827;
+  --frontier: #3987e5; --reasoning: #d95926; --small: #199e70;
+  --hi: #e0682f; --base: #6b7471; --good: #3fb67c; --far: #ef6a57; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5;
+  padding-block: 32px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 28px; }
+h1, h2 { font-family: var(--display); text-wrap: balance; margin: 0; }
+h1 { font-size: 28px; font-weight: 600; }
+h2 { font-size: 21px; font-weight: 600; line-height: 1.3; }
+h3 { margin: 0; font-size: 14px; font-weight: 600; }
+.lede { color: var(--fg2); max-width: 72ch; margin: 6px 0 0; }
+.flags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.chip { background: var(--chip); color: var(--fg2); border-radius: 999px; padding: 3px 10px; font-size: 12.5px; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 22px; display: grid; gap: 18px; min-width: 0; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.sub { color: var(--fg2); margin: 4px 0 0; max-width: 76ch; }
+.note { font-size: 12.5px; color: var(--muted); max-width: 86ch; margin: 0; }
+.tradeoffs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.tradeoffs > div { background: var(--chip); border-radius: 8px; padding: 12px 14px; min-width: 0; }
+.tradeoffs ul { margin: 4px 0 0; padding-left: 18px; color: var(--fg2); font-size: 13.5px; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--fg2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.scroll { overflow-x: auto; }
+svg text { fill: var(--fg2); font-family: var(--body); font-size: 11.5px; }
+svg .grid { stroke: var(--grid); }
+svg .strong { fill: var(--fg); font-weight: 600; }
+.mono { font-family: var(--mono); }
+
+/* E2 receipt */
+.receipt-wrap { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 28px; align-items: start; }
+.receipt { background: var(--chip); border-radius: 6px; padding: 18px 18px 14px; font-family: var(--mono); font-size: 13px; font-variant-numeric: tabular-nums;
+  mask: radial-gradient(circle 6px at 50% 100%, transparent 98%, #000) 0 0 / 16px 100% repeat-x; padding-bottom: 22px; }
+.receipt .hd { text-align: center; font-weight: 600; letter-spacing: .06em; margin-bottom: 2px; }
+.receipt .sm { text-align: center; color: var(--muted); font-size: 11.5px; margin-bottom: 10px; }
+.receipt .line { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 8px; padding: 5px 0; }
+.receipt .line.hl { background: color-mix(in srgb, var(--reasoning) 16%, transparent); margin-inline: -8px; padding-inline: 8px; border-radius: 4px; font-weight: 600; }
+.receipt .rule { border-top: 1px dashed var(--muted); margin: 8px 0; }
+.receipt .tot { display: flex; justify-content: space-between; font-weight: 600; }
+.split { display: grid; gap: 16px; }
+.split .row { display: grid; gap: 6px; }
+.split .lab { font-size: 13px; font-weight: 600; }
+.stack { display: flex; height: 34px; border-radius: 4px; overflow: hidden; gap: 2px; }
+.stack div { display: flex; align-items: center; padding-left: 8px; font-size: 12.5px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; }
+.stack .s { background: var(--small); } .stack .f { background: var(--frontier); } .stack .r { background: var(--reasoning); }
+.takeaway { border-left: 3px solid var(--reasoning); padding: 4px 0 4px 12px; font-size: 14.5px; }
+.takeaway b { font-variant-numeric: tabular-nums; }
+
+/* F2 scorecard */
+table.score { border-collapse: separate; border-spacing: 0 4px; width: 100%; min-width: 760px; font-variant-numeric: tabular-nums; }
+.score th { text-align: left; font-size: 12px; color: var(--muted); font-weight: 600; padding: 6px 10px; vertical-align: bottom; }
+.score th small { display: block; font-weight: 400; color: var(--muted); }
+.score td { padding: 9px 10px; font-size: 13.5px; background: var(--chip); }
+.score tr td:first-child { border-radius: 8px 0 0 8px; }
+.score tr td:last-child { border-radius: 0 8px 8px 0; }
+.score tr.hi td { background: color-mix(in srgb, var(--hi) 12%, var(--surface)); }
+.score tr.hi td:first-child { box-shadow: inset 4px 0 0 var(--hi); }
+.pname { font-weight: 600; }
+.pname small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+.cell { display: inline-flex; align-items: center; gap: 6px; }
+.st { font-size: 11.5px; font-weight: 600; border-radius: 999px; padding: 1px 7px; }
+.st.ok { color: var(--good); border: 1px solid var(--good); }
+.st.no { color: var(--far); border: 1px solid var(--far); }
+.st.na { color: var(--muted); border: 1px solid var(--rule); }
+.role { font-weight: 600; }
+.count { font-family: var(--display); font-weight: 600; font-size: 15px; }
+
+/* F3 */
+.facets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.facets > div { min-width: 0; }
+.ftitle { font-size: 13.5px; font-weight: 600; }
+.fsub { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.roles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.roles > div { border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; font-size: 13.5px; color: var(--fg2); }
+.roles b { color: var(--fg); display: block; font-family: var(--display); font-size: 15px; }
+#tip { position: fixed; pointer-events: none; background: var(--fg); color: var(--bg); font-size: 12.5px; padding: 6px 9px; border-radius: 6px; max-width: 280px; z-index: 20; }
+@media (max-width: 760px) {
+  .tradeoffs, .receipt-wrap, .facets, .roles { grid-template-columns: 1fr; }
+  h1 { font-size: 23px; }
+}
+
+
+/* Layout: one review column; three option panels (D guide, E price tags, F persona lanes), each = insight title, visual, trade-offs */
+:root {
+  --bg: #f7f8f7; --surface: #ffffff; --fg: #141716; --fg2: #4d5552; --muted: #7b8480;
+  --rule: #dfe3e1; --grid: #eceeed; --chip: #eef1f0;
+  --frontier: #2a78d6; --reasoning: #eb6834; --small: #1baf7a; --hi: #eb6834;
+  --display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --body: "Inter", "Segoe UI", system-ui, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121413; --surface: #1a1d1c; --fg: #eef0ef; --fg2: #c0c6c3; --muted: #8d9692;
+  --rule: #2c3130; --grid: #242827; --chip: #242827;
+  --frontier: #3987e5; --reasoning: #d95926; --small: #199e70; --hi: #d95926; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121413; --surface: #1a1d1c; --fg: #eef0ef; --fg2: #c0c6c3; --muted: #8d9692;
+  --rule: #2c3130; --grid: #242827; --chip: #242827;
+  --frontier: #3987e5; --reasoning: #d95926; --small: #199e70; --hi: #d95926; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5;
+  padding-block: 32px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 28px; }
+h1, h2 { font-family: var(--display); text-wrap: balance; margin: 0; }
+h1 { font-size: 28px; font-weight: 600; }
+h2 { font-size: 20px; font-weight: 600; line-height: 1.3; }
+h3 { margin: 0; font-size: 14px; font-weight: 600; }
+.lede { color: var(--fg2); max-width: 70ch; margin: 6px 0 0; }
+.flags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.chip { background: var(--chip); color: var(--fg2); border-radius: 999px; padding: 3px 10px; font-size: 12.5px; }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 22px; display: grid; gap: 18px; min-width: 0; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.sub { color: var(--fg2); margin: 4px 0 0; max-width: 74ch; }
+.note { font-size: 12.5px; color: var(--muted); max-width: 84ch; margin: 0; }
+.tradeoffs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.tradeoffs > div { background: var(--chip); border-radius: 8px; padding: 12px 14px; min-width: 0; }
+.tradeoffs ul { margin: 4px 0 0; padding-left: 18px; color: var(--fg2); font-size: 13.5px; }
+.num { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--mono); font-size: 12.5px; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; flex: none; }
+
+/* D: decision guide */
+.flow { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+.q { border: 1.5px solid var(--fg2); border-radius: 10px; padding: 12px 16px; max-width: 520px; background: var(--surface); }
+.q b { display: block; font-family: var(--display); font-size: 16px; }
+.q span { color: var(--fg2); font-size: 13px; }
+.branch { display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: stretch; }
+.stem { position: relative; }
+.stem::before { content: ""; position: absolute; left: 24px; top: 0; bottom: 0; border-left: 1.5px solid var(--rule); }
+.yes { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: center; padding-block: 12px; }
+.lbl { font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.end { border-radius: 10px; border: 1px solid var(--rule); padding: 12px 14px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: center; border-left: 5px solid var(--c); }
+.end .t { font-family: var(--display); font-weight: 600; font-size: 17px; }
+.end .d { color: var(--fg2); font-size: 13px; }
+.tag .k { font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.tag .v { font-family: var(--display); font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tag .r { font-size: 12.5px; color: var(--fg2); }
+.cur { font-size: 12.5px; color: var(--fg2); }
+.cur .blank { border: 1.5px dashed var(--rule); border-radius: 6px; padding: 3px 8px; color: var(--muted); display: inline-block; margin-top: 3px; }
+.callout { background: var(--chip); border-radius: 8px; padding: 12px 14px; font-size: 14px; display: grid; gap: 4px; }
+.callout b { font-variant-numeric: tabular-nums; }
+
+/* E: price tags */
+.tags { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.ptag { border: 1px solid var(--rule); border-radius: 10px; padding: 14px; display: grid; gap: 6px; position: relative; }
+.ptag::before { content: ""; position: absolute; top: 14px; right: 14px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--rule); }
+.ptag .p { font-weight: 600; display: flex; gap: 8px; align-items: center; }
+.ptag .big { font-family: var(--display); font-size: 30px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.ptag .row { display: flex; justify-content: space-between; font-size: 13px; color: var(--fg2); border-top: 1px dashed var(--rule); padding-top: 6px; font-variant-numeric: tabular-nums; }
+.units { display: grid; gap: 14px; }
+.urow { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 14px; align-items: center; }
+.urow .lab { font-size: 13.5px; }
+.urow .lab b { font-variant-numeric: tabular-nums; }
+.dots { display: flex; flex-wrap: wrap; gap: 3px; }
+.dots i { width: 9px; height: 9px; border-radius: 2px; background: var(--c); }
+.dots.big i { width: 22px; height: 22px; border-radius: 4px; }
+.dots.tiny i { width: 7px; height: 7px; border-radius: 1.5px; gap: 2px; }
+.ctitle { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+svg text { fill: var(--fg2); font-family: var(--body); font-size: 11.5px; }
+svg .grid { stroke: var(--grid); }
+.scroll { overflow-x: auto; }
+
+/* F: persona lanes */
+.lanes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; align-items: stretch; }
+.lane { padding: 14px; display: grid; gap: 10px; align-content: start; border: 1px solid var(--rule); min-width: 0; }
+.lane:first-child { border-radius: 10px 0 0 10px; }
+.lane:last-child { border-radius: 0 10px 10px 0; }
+.lane + .lane { border-left: none; }
+.lane .step { font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.lane .role { font-family: var(--display); font-size: 18px; font-weight: 600; }
+.lane .who { display: flex; flex-wrap: wrap; gap: 6px; }
+.pchip { border-radius: 999px; padding: 2px 9px; font-size: 12px; font-weight: 500; border: 1px solid var(--rule); }
+.pchip.hi { border-color: var(--hi); color: var(--fg); background: color-mix(in srgb, var(--hi) 14%, transparent); }
+.lane ul { margin: 0; padding-left: 18px; font-size: 13.5px; color: var(--fg2); }
+.metric { display: grid; gap: 6px; }
+.mrow { display: grid; grid-template-columns: 96px minmax(0, 1fr) 54px; gap: 8px; align-items: center; font-size: 12.5px; color: var(--fg2); font-variant-numeric: tabular-nums; }
+.track { height: 8px; background: var(--grid); border-radius: 4px; position: relative; }
+.fill { position: absolute; inset: 0 auto 0 0; border-radius: 4px; }
+.mrow .v { text-align: right; color: var(--fg); }
+.arrow { text-align: center; color: var(--muted); font-size: 13px; padding: 8px 0 0; }
+.habits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.habits div { background: var(--chip); border-radius: 8px; padding: 8px 10px; font-size: 12.5px; color: var(--fg2); }
+.habits b { display: block; color: var(--fg); font-size: 13px; }
+#tip { position: fixed; pointer-events: none; background: var(--fg); color: var(--bg); font-size: 12.5px; padding: 6px 9px; border-radius: 6px; max-width: 260px; z-index: 20; }
+@media (max-width: 720px) {
+  .tradeoffs, .tags, .lanes, .habits { grid-template-columns: 1fr; }
+  .lane, .lane:first-child, .lane:last-child { border-radius: 10px; border-left: 1px solid var(--rule); }
+  .lanes { gap: 10px; }
+  .end { grid-template-columns: 1fr; }
+  .urow { grid-template-columns: 1fr; }
+  h1 { font-size: 23px; }
+}
+
+
+/* Round 4: plain bars and cards, one takeaway per chart, a "how to read" line under each title */
+:root {
+  --bg: #f7f8f7; --surface: #ffffff; --fg: #141716; --fg2: #4d5552; --muted: #7b8480;
+  --rule: #dfe3e1; --grid: #eceeed; --chip: #eef1f0;
+  --frontier: #2a78d6; --reasoning: #eb6834; --small: #1baf7a;
+  --hi: #eb6834; --base: #9aa3a0; --good: #0a7d4b; --far: #c4321f;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121413; --surface: #1a1d1c; --fg: #eef0ef; --fg2: #c0c6c3; --muted: #8d9692;
+  --rule: #2c3130; --grid: #242827; --chip: #242827;
+  --frontier: #3987e5; --reasoning: #d95926; --small: #199e70;
+  --hi: #e0682f; --base: #6b7471; --good: #3fb67c; --far: #ef6a57; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121413; --surface: #1a1d1c; --fg: #eef0ef; --fg2: #c0c6c3; --muted: #8d9692;
+  --rule: #2c3130; --grid: #242827; --chip: #242827;
+  --frontier: #3987e5; --reasoning: #d95926; --small: #199e70;
+  --hi: #e0682f; --base: #6b7471; --good: #3fb67c; --far: #ef6a57; color-scheme: dark }
+.howto { font-size: 13px; color: var(--fg2); background: var(--chip); border-radius: 6px; padding: 6px 10px; justify-self: start; }
+.howto b { color: var(--fg); }
+.hbars { display: grid; gap: 10px; }
+.hb { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; align-items: center; }
+.hb .nm { font-size: 14px; font-weight: 600; }
+.hb .nm small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+.hb .tr { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.hb .b { height: 26px; border-radius: 0 4px 4px 0; min-width: 3px; flex: none; }
+.hb .val { font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hb .val small { font-weight: 400; color: var(--fg2); }
+.hb.dim .nm { color: var(--fg2); font-weight: 500; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.two > div { min-width: 0; display: grid; gap: 10px; align-content: start; }
+.ct { font-size: 13.5px; font-weight: 600; }
+.ann { font-size: 13.5px; border-left: 3px solid var(--reasoning); padding: 2px 0 2px 10px; }
+.pair { display: grid; gap: 4px; }
+.pair .row { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 8px; align-items: center; font-size: 12.5px; color: var(--fg2); }
+.pair .b { height: 18px; border-radius: 0 4px 4px 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; font-size: 12px; font-weight: 600; color: #fff; min-width: 34px; box-sizing: border-box; }
+.pair .b.out { background: transparent !important; color: var(--fg); justify-content: flex-start; padding-left: 4px; }
+.pgroup { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; align-items: center; padding-block: 6px; border-bottom: 1px solid var(--grid); }
+.waf { display: flex; flex-wrap: wrap; gap: 2px; }
+.waf i { width: 8px; height: 8px; border-radius: 1.5px; background: var(--c); }
+.wrow { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 14px; align-items: start; padding-block: 8px; border-bottom: 1px solid var(--grid); }
+.wrow .big { font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.wrow .lb { font-size: 13px; color: var(--fg2); }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.card { border: 1px solid var(--rule); border-radius: 10px; padding: 14px; display: grid; gap: 8px; align-content: start; }
+.card.hi { border-color: var(--hi); box-shadow: inset 0 4px 0 var(--hi); }
+.card .hd { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.card .nm { font-weight: 600; font-size: 15px; }
+.card .score { font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+.card .score.ok { color: var(--good); } .card .score.no { color: var(--far); }
+.card .hab { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 6px; font-size: 13px; color: var(--fg2); }
+.card .hab .i { font-weight: 700; }
+.card .hab .i.ok { color: var(--good); } .card .hab .i.no { color: var(--far); }
+.card .hab b { color: var(--fg); font-variant-numeric: tabular-nums; }
+.card .role { font-size: 12.5px; color: var(--muted); border-top: 1px dashed var(--rule); padding-top: 6px; }
+.gloss { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.gloss div { font-size: 12.5px; color: var(--fg2); background: var(--chip); border-radius: 8px; padding: 8px 10px; }
+.gloss b { display: block; color: var(--fg); font-size: 13px; }
+.ghost { height: 26px; border: 2px dashed var(--fg2); border-radius: 0 4px 4px 0; box-sizing: border-box; flex: none; }
+.stackb { display: flex; align-items: center; gap: 0; min-width: 0; }
+@media (max-width: 760px) { .two, .cards, .gloss { grid-template-columns: 1fr; } .hb, .pgroup, .wrow { grid-template-columns: 1fr; gap: 6px; } }
+
+
+/* Round 5: slope chart, 10x10 waffles, indexed bars, per-fix bars. Relies on round 4 tokens and classes. */
+.slope text.big { font-size: 13px; font-weight: 600; fill: var(--fg); }
+.wafs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.wafs > div { display: grid; gap: 8px; justify-items: start; min-width: 0; }
+.w100 { display: grid; grid-template-columns: repeat(10, 18px); gap: 3px; }
+.w100 i { width: 18px; height: 18px; border-radius: 3px; background: var(--grid); }
+.w100 i.on { background: var(--reasoning); }
+.wbig { font-size: 30px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1; }
+.wlab { font-size: 13px; color: var(--fg2); }
+.idx { display: grid; gap: 12px; }
+.irow { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; align-items: center; }
+.irow .nm { font-size: 13.5px; font-weight: 600; }
+.irow.dim .nm { color: var(--fg2); font-weight: 500; }
+.irow .nm small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+.ibars { display: grid; gap: 3px; position: relative; }
+.ibar { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.ibar .b { height: 13px; border-radius: 0 3px 3px 0; flex: none; }
+.ibar .k { width: 46px; color: var(--muted); font-size: 11.5px; flex: none; }
+.fixes { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.fixes > div { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.fx { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 10px; align-items: center; }
+.fx .nm { font-size: 13.5px; }
+.fx .nm small { display: block; color: var(--muted); font-size: 12px; }
+@media (max-width: 760px) { .wafs, .fixes { grid-template-columns: 1fr; } .irow, .fx { grid-template-columns: 1fr; gap: 4px; } }
+
+
+body { margin: 0; }
+[hidden] { display: none !important; }
+.group { display: grid; gap: 18px; }
+.ghead { display: grid; gap: 4px; padding-top: 10px; border-top: 2px solid var(--rule); }
+.ghead h2 { font-size: 24px; }
+.toc { display: grid; gap: 8px; margin-top: 14px; font-size: 13.5px; }
+.toc div { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.toc b { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); min-width: 120px; }
+.toc a { color: var(--fg); text-decoration: none; border: 1px solid var(--rule); border-radius: 999px; padding: 2px 10px; background: var(--surface); }
+.toc a:hover, .toc a:focus-visible { border-color: var(--frontier); outline: none; }
+.toc a.new { border-color: var(--reasoning); }
+.seg { display: inline-flex; margin-top: 16px; border: 1px solid var(--rule); border-radius: 999px; padding: 3px; background: var(--surface); gap: 2px; }
+.seg button { font: inherit; font-size: 14px; font-weight: 600; border: 0; border-radius: 999px; padding: 6px 14px; background: transparent; color: var(--fg2); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.seg button:focus-visible { outline: 2px solid var(--frontier); outline-offset: 2px; }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Decision P12 · every version of E and F</div>
+    <h1>Price tags (E) and persona habits (F): all versions</h1>
+    <p class="lede">E answers "what does a request cost?" F answers "which teams need to change?" Versions 4 and up are the simplest, each with one takeaway and a "How to read" line; 7 and 8 (outlined in orange) are the newest. All numbers come from our pipeline (synthetic data, Oct 2026; energy is estimated).</p>
+    <div class="seg" role="group" aria-label="Show options">
+      <button type="button" data-show="E" aria-pressed="true">E · price tags</button>
+      <button type="button" data-show="F" aria-pressed="false">F · persona habits</button>
+      <button type="button" data-show="all" aria-pressed="false">Both</button>
+    </div>
+    <nav class="toc" aria-label="Jump to a version">
+      <div data-g="E"><b>E · price tags</b><a href="#opt-e8r" class="new">★ E8 revised (chosen)</a><a href="#opt-e">E Price tags</a><a href="#opt-e2">E2 Receipt</a><a href="#opt-e3">E3 Cost vs energy</a><a href="#opt-e4">E4 Cost of one request</a><a href="#opt-e5">E5 Requests vs bill</a><a href="#opt-e6">E6 What $10 buys</a><a href="#opt-e7">E7 Slope</a><a href="#opt-e8">E8 Out of 100</a></div>
+      <div data-g="F"><b>F · persona habits</b><a href="#opt-f">F Persona lanes</a><a href="#opt-f2">F2 Scorecard</a><a href="#opt-f3">F3 Distance to best</a><a href="#opt-f4">F4 Bars per habit</a><a href="#opt-f5">F5 Persona cards</a><a href="#opt-f6">F6 Today vs best</a><a href="#opt-f7">F7 × CMU best</a><a href="#opt-f8">F8 Which fix helps most</a></div>
+    </nav>
+  </header>
+  <div class="group" data-g="E"><div class="ghead"><div class="eyebrow">Group E</div><h2>What one request costs</h2><p class="sub">The chosen design (E8, revised to compare all three model types) is first. Earlier versions follow for reference.</p></div>
+  <style>
+.e8 { --reasoning: #eb6834; --frontier: #2a78d6; --small: #1baf7a; --cellgap: 3px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .e8 { --reasoning: #d95926; --frontier: #3987e5; --small: #199e70; } }
+:root[data-theme="dark"] .e8 { --reasoning: #d95926; --frontier: #3987e5; --small: #199e70; }
+.e8 .key { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.e8 .key > div { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 10px; align-items: start; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 8px; }
+.e8 .key i { width: 16px; height: 16px; border-radius: 3px; margin-top: 3px; }
+.e8 .key b { display: block; font-size: 14.5px; }
+.e8 .key span { font-size: 13px; color: var(--fg2); }
+.e8 .key code { font-size: 12.5px; }
+.e8 .key .pr { display: block; margin-top: 4px; font-variant-numeric: tabular-nums; color: var(--fg); font-size: 13px; }
+.e8 .grids { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.e8 .g { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.e8 .gt { font-family: var(--display, inherit); font-size: 18px; font-weight: 600; }
+.e8 .gt small { font-family: var(--body, inherit); font-weight: 400; font-size: 13px; color: var(--muted); }
+.e8 .w { display: grid; grid-template-columns: repeat(10, 1fr); gap: var(--cellgap); width: min(100%, 240px); aspect-ratio: 1; }
+.e8 .w i { border-radius: 3px; }
+.e8 .split { display: grid; gap: 3px; font-size: 13.5px; font-variant-numeric: tabular-nums; width: min(100%, 240px); }
+.e8 .split div { display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.e8 .split i { width: 12px; height: 12px; border-radius: 2px; }
+.e8 .split b { font-weight: 600; }
+.e8 .split .hl { font-weight: 600; }
+.e8 .ann { border-left: 3px solid var(--reasoning); padding: 4px 0 4px 14px; font-size: 15.5px; max-width: 76ch; }
+.e8 .habit { background: var(--chip); border-radius: 8px; padding: 12px 16px; font-size: 14.5px; max-width: 84ch; }
+.e8 .habit .k { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; display: block; margin-bottom: 2px; }
+.e8 .foot { font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 12px; display: grid; gap: 4px; }
+.e8 .foot a { color: var(--fg2); }
+@media (max-width: 720px) { .e8 .grids, .e8 .key { grid-template-columns: 1fr; } }
+</style>
+<section id="opt-e8r" class="panel e8 " aria-labelledby="e8-title" aria-describedby="e8-alt">
+  <div>
+    <div class="eyebrow">Option E8 revised · three model types compared (chosen design, D26/D27)</div>
+    <h2 id="e8-title">Out of every 100 OpenAI requests, 10 used the reasoning model, and they ran up 65 of every 100 dollars</h2>
+  </div>
+  <div class="howto"><b>How to read:</b> the three model types are compared. Each grid has 100 squares, colored by model type, so you can see how requests, cost and energy split.</div>
+  <div class="key"><div><i style="background:var(--reasoning)"></i><div><b>Reasoning model</b><span><code>o1-preview</code> · for multi-step problems</span><span class="pr">$0.282 and 6.6 Wh per request</span></div></div><div><i style="background:var(--frontier)"></i><div><b>Frontier model</b><span><code>gpt-4o</code> · for general high-quality work</span><span class="pr">$0.031 and 1.8 Wh per request</span></div></div><div><i style="background:var(--small)"></i><div><b>Small/fast model</b><span><code>gpt-4o-mini</code> · for routine tasks</span><span class="pr">$0.001 and 1.2 Wh per request</span></div></div></div>
+  <div class="grids"><div class="g"><div class="gt">Every 100 requests<small></small></div><div class="w" aria-hidden="true"><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i></div><div class="split"><div class="hl"><i style="background:var(--reasoning)"></i><span>Reasoning</span><b>10</b></div><div class=""><i style="background:var(--frontier)"></i><span>Frontier</span><b>48</b></div><div class=""><i style="background:var(--small)"></i><span>Small/fast</span><b>42</b></div></div></div><div class="g"><div class="gt">Every 100 dollars<small></small></div><div class="w" aria-hidden="true"><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--small)"></i></div><div class="split"><div class="hl"><i style="background:var(--reasoning)"></i><span>Reasoning</span><b>65</b></div><div class=""><i style="background:var(--frontier)"></i><span>Frontier</span><b>34</b></div><div class=""><i style="background:var(--small)"></i><span>Small/fast</span><b>1</b></div></div></div><div class="g"><div class="gt">Every 100 watt-hours<small> (estimated)</small></div><div class="w" aria-hidden="true"><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--reasoning)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--frontier)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i><i style="background:var(--small)"></i></div><div class="split"><div class="hl"><i style="background:var(--reasoning)"></i><span>Reasoning</span><b>32</b></div><div class=""><i style="background:var(--frontier)"></i><span>Frontier</span><b>42</b></div><div class=""><i style="background:var(--small)"></i><span>Small/fast</span><b>26</b></div></div></div></div>
+  <div class="ann">The reasoning model handled <b>10</b> of every 100 requests but cost <b>65</b> of every 100 dollars. The small/fast model handled <b>42</b> requests for about <b>1</b> dollar. A reasoning request cost about <b>$0.25</b> more and used <b>4.8 Wh</b> more (range 3.5–6.2) than a frontier request.</div>
+  <div class="habit"><span class="k">The habit that outlasts the model</span>Use a reasoning model for complex, multi-step problems. For everything else, OpenAI advises: <q>Speed and cost → GPT models are faster and tend to cost less</q>.</div>
+  <p id="e8-alt" hidden>Three 10 by 10 grids comparing three OpenAI model types in October 2026. Requests: reasoning 10, frontier 48, small/fast 42. Dollars: reasoning 65, frontier 34, small/fast 1. Estimated watt-hours: reasoning 32, frontier 42, small/fast 26.</p>
+  <div class="foot">
+    <span><b>Data:</b> CMU IronViz synthetic telemetry, Oct 1–30, 2026; 103,211 successful requests from the three OpenAI teams (the Gemini teams have no reasoning model in the data). Squares are rounded so each grid adds to 100.</span>
+    <span><b>Cost:</b> public list prices (the o1-preview price is from a third-party archive and unverified). <b>Energy:</b> estimated from Jegham et al. (2025), arXiv:2505.09598, and Elsworth et al. (2025), arXiv:2508.15734; the o1 benchmark stands in for o1-preview.</span>
+    <span><b>Guidance:</b> OpenAI, <i>Reasoning best practices</i>, <a href="https://developers.openai.com/api/docs/guides/reasoning-best-practices">developers.openai.com/api/docs/guides/reasoning-best-practices</a>, accessed Nov 14, 2026. All three models have since been retired or scheduled for retirement; the habit applies to whichever models are current.</span>
+  </div>
+  <div class="tradeoffs">
+    <div><h3>Strengths</h3><ul><li>All three model types are named, colored and explained, so the comparison is explicit.</li><li>The same 100-square format shows requests, cost and energy side by side.</li><li>Shows the small/fast model doing 42% of the work for about 1% of the cost.</li></ul></div>
+    <div><h3>Weaknesses</h3><ul><li>More to read than the orange-only version.</li><li>OpenAI only (Gemini has no reasoning model in the data).</li></ul></div>
+  </div>
+</section><section id="opt-e" class="panel" aria-labelledby="e-h">
+    <div>
+      <div class="eyebrow">Option E · Price tag per request</div>
+      <h2 id="e-h">One reasoning request cost as much as 9 frontier requests or about 300 small/fast requests</h2>
+      <p class="sub">A "menu" view of what a single request costs. Ratios stay useful when models change; re-run the pipeline with new prices and the tags update.</p>
+    </div>
+    <div class="tags">
+      <div class="ptag"><div class="p"><i class="sw" style="background:var(--small)"></i>Small/fast</div><div class="big">$0.001</div><div class="mono">gpt-4o-mini</div><div class="row"><span>Energy</span><span>0.9–1.6 Wh</span></div><div class="row"><span>Share of OpenAI requests</span><span>42%</span></div></div>
+      <div class="ptag"><div class="p"><i class="sw" style="background:var(--frontier)"></i>Frontier</div><div class="big">$0.031</div><div class="mono">gpt-4o</div><div class="row"><span>Energy</span><span>1.3–2.3 Wh</span></div><div class="row"><span>Share of OpenAI requests</span><span>48%</span></div></div>
+      <div class="ptag"><div class="p"><i class="sw" style="background:var(--reasoning)"></i>Reasoning</div><div class="big">$0.282</div><div class="mono">o1-preview</div><div class="row"><span>Energy</span><span>4.8–8.5 Wh</span></div><div class="row"><span>Share of OpenAI requests</span><span>10%</span></div></div>
+    </div>
+    <div>
+      <div class="ctitle">Same cost as one reasoning request</div>
+      <div class="units" id="units"></div>
+    </div>
+    <div>
+      <div class="ctitle">Energy per request (Wh, line = low to high estimate, dot = central)</div>
+      <div class="scroll"><svg id="ewh" viewBox="0 0 720 200" style="min-width:560px;width:100%" role="img" aria-label="Energy per request: gemini-1.5-flash 0.7 to 1.2 Wh, gpt-4o-mini 0.9 to 1.6, gpt-4o 1.3 to 2.3, gemini-1.5-pro 2.0 to 3.7, o1-preview 4.8 to 8.5."></svg></div>
+    </div>
+    <p class="note">Energy differences are smaller than cost differences: a reasoning request uses about 3.7× the energy of a frontier request but costs 9×. The gpt-4o-mini energy figure assumes older hardware in the benchmark, so it may be overstated.</p>
+    <div class="tradeoffs">
+      <div><h3>Strengths</h3><ul><li>Memorable for a mixed audience: "one reasoning request = 9 frontier requests."</li><li>Ratios plus a date stamp handle model drift honestly.</li><li>Shows that cost and energy don't move together, which matters for both goals.</li></ul></div>
+      <div><h3>Weaknesses</h3><ul><li>It's evidence, not guidance. It doesn't say who should do what.</li><li>Ratios from retired models may not hold for their replacements.</li></ul></div>
+    </div>
+  </section><section id="opt-e2" class="panel" aria-labelledby="e2-h">
+    <div>
+      <div class="eyebrow">Option E2 · The receipt</div>
+      <h2 id="e2-h">For every $43 CMU spent on 1,000 OpenAI requests, $28 paid for the 100 reasoning requests</h2>
+      <p class="sub">A typical 1,000 successful OpenAI requests in October 2026, in the same mix CMU used. The right side compares each purpose's share of requests, cost and energy.</p>
+    </div>
+    <div class="receipt-wrap">
+      <div class="receipt" role="img" aria-label="Receipt per 1,000 OpenAI requests: 419 small/fast requests $0.40, 481 frontier requests $14.68, 100 reasoning requests $28.07, total $43.16.">
+        <div class="hd">CMU · OPENAI REQUESTS</div>
+        <div class="sm">per 1,000 successful requests · Oct 2026</div>
+        <div class="line"><span>419</span><span>small/fast <span style="color:var(--muted)">@ $0.001</span></span><span>$0.40</span></div>
+        <div class="line"><span>481</span><span>frontier <span style="color:var(--muted)">@ $0.031</span></span><span>$14.68</span></div>
+        <div class="line hl"><span>100</span><span>reasoning @ $0.282</span><span>$28.07</span></div>
+        <div class="rule"></div>
+        <div class="tot"><span>TOTAL</span><span>$43.16</span></div>
+        <div class="tot" style="font-weight:400;color:var(--fg2)"><span>Energy</span><span>2.0 kWh</span></div>
+      </div>
+      <div class="split">
+        <div class="row"><div class="lab">Share of requests</div><div class="stack" data-tip="Requests: small/fast 42%, frontier 48%, reasoning 10%"><div class="s" style="flex:41.9">42%</div><div class="f" style="flex:48.1">48%</div><div class="r" style="flex:10">10%</div></div></div>
+        <div class="row"><div class="lab">Share of cost</div><div class="stack" data-tip="Cost: small/fast 1%, frontier 34%, reasoning 65%"><div class="s" style="flex:0.9"></div><div class="f" style="flex:34">34%</div><div class="r" style="flex:65">65%</div></div></div>
+        <div class="row"><div class="lab">Share of energy</div><div class="stack" data-tip="Energy: small/fast 26%, frontier 42%, reasoning 32%"><div class="s" style="flex:25.7">26%</div><div class="f" style="flex:42">42%</div><div class="r" style="flex:32.3">32%</div></div></div>
+        <div class="legend"><span><i class="sw" style="background:var(--small)"></i>Small/fast</span><span><i class="sw" style="background:var(--frontier)"></i>Frontier</span><span><i class="sw" style="background:var(--reasoning)"></i>Reasoning</span></div>
+        <div class="takeaway">Each reasoning request answered by a frontier model instead saves about <b>$0.25</b> and <b>4.8 Wh</b>. Up to <b>75</b> of these 100 gave answers no longer than a typical frontier answer.</div>
+      </div>
+    </div>
+    <div class="tradeoffs">
+      <div><h3>Strengths</h3><ul><li>A receipt is instantly readable for any audience.</li><li>"Per 1,000 requests" scales to any team and survives price changes: re-run and reprint.</li><li>Shows that cost and energy concentrate differently.</li></ul></div>
+      <div><h3>Weaknesses</h3><ul><li>OpenAI only, since Gemini has no reasoning model in the data.</li><li>Doesn't show personas; pairs with F for that.</li></ul></div>
+    </div>
+  </section><section id="opt-e3" class="panel" aria-labelledby="e3-h">
+    <div>
+      <div class="eyebrow">Option E3 · Cost and energy, relative to a frontier request</div>
+      <h2 id="e3-h">Moving down from reasoning saves both money and energy; moving down to small/fast mostly saves money</h2>
+      <p class="sub">Each purpose compared with one frontier request (= 1×) from the same provider. Both measures share one scale, so the gap between the two dots is the insight.</p>
+    </div>
+    <div class="legend"><span><i class="sw" style="background:var(--fg);border-radius:50%"></i>Cost (filled dot)</span><span><i class="sw" style="background:transparent;border:2px solid var(--fg);border-radius:50%"></i>Energy (open dot)</span></div>
+    <div class="scroll"><svg id="e3" viewBox="0 0 860 250" style="min-width:640px;width:100%" role="img" aria-label="Relative to a frontier request: reasoning costs 9.2 times and uses 3.7 times the energy. gpt-4o-mini costs 1/32 and uses 0.70 times the energy. gemini-1.5-flash costs 1/70 and uses 0.33 times the energy."></svg></div>
+    <p class="note">Log scale: each gridline step is the same multiplication. gpt-4o-mini's energy figure assumes older hardware in the benchmark, so its energy saving may be understated.</p>
+    <div class="tradeoffs">
+      <div><h3>Strengths</h3><ul><li>Covers both goals in one view and shows they don't move together.</li><li>Relative multiples outlast specific models and prices.</li><li>Adds a sustainability point the receipt can't make.</li></ul></div>
+      <div><h3>Weaknesses</h3><ul><li>The log scale needs explaining for a non-technical reader.</li><li>More abstract than the receipt.</li></ul></div>
+    </div>
+  </section><section id="opt-e4" class="panel" aria-labelledby="e4-h">
+  <div>
+    <div class="eyebrow">Option E4 · Cost of one request</div>
+    <h2 id="e4-h">One reasoning request costs 9 times as much as a frontier request</h2>
+  </div>
+  <div class="howto"><b>How to read:</b> longer bar = more expensive. Each bar is the average cost of a single request in October 2026.</div>
+  <div class="two">
+    <div>
+      <div class="ct">Cost of one request (US dollars)</div>
+      <div class="hbars">
+        <div class="hb"><div class="nm">Small/fast<small>gpt-4o-mini</small></div><div class="tr"><div class="b" style="width:0.34%;background:var(--small)"></div><span class="val">$0.001</span></div></div>
+        <div class="hb"><div class="nm">Frontier<small>gpt-4o</small></div><div class="tr"><div class="b" style="width:8.4%;background:var(--frontier)"></div><span class="val">$0.03</span></div></div>
+        <div class="hb"><div class="nm">Reasoning<small>o1-preview</small></div><div class="tr"><div class="b" style="width:78%;background:var(--reasoning)"></div><span class="val">$0.28 <small>· 9× frontier</small></span></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="ct">Energy of one request (watt-hours, central estimate)</div>
+      <div class="hbars">
+        <div class="hb"><div class="nm">Small/fast<small>gpt-4o-mini</small></div><div class="tr"><div class="b" style="width:14.7%;background:var(--small)"></div><span class="val">1.2 Wh</span></div></div>
+        <div class="hb"><div class="nm">Frontier<small>gpt-4o</small></div><div class="tr"><div class="b" style="width:21%;background:var(--frontier)"></div><span class="val">1.8 Wh</span></div></div>
+        <div class="hb"><div class="nm">Reasoning<small>o1-preview</small></div><div class="tr"><div class="b" style="width:78%;background:var(--reasoning)"></div><span class="val">6.6 Wh <small>· 3.7× frontier</small></span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">Money and energy don't move together: small/fast is about 30× cheaper than frontier but uses only about a third less energy.</div>
+  <div class="tradeoffs">
+    <div><h3>Strengths</h3><ul><li>The simplest possible chart: three bars, one number each.</li><li>Covers both goals side by side.</li></ul></div>
+    <div><h3>Weaknesses</h3><ul><li>Doesn't show how often each model is used.</li><li>The small/fast cost bar is almost invisible (that is the point, but it can look like missing data).</li></ul></div>
+  </div>
+</section><section id="opt-e5" class="panel" aria-labelledby="e5-h">
+  <div>
+    <div class="eyebrow">Option E5 · Share of requests vs share of the bill</div>
+    <h2 id="e5-h">Reasoning is 1 in 10 OpenAI requests but 2 in 3 dollars</h2>
+  </div>
+  <div class="howto"><b>How to read:</b> for each model type, the light bar is its share of requests and the dark bar is its share of the bill. A dark bar much longer than the light bar means that model is expensive for how often it's used.</div>
+  <div class="hbars" id="e5"></div>
+  <div class="ann">The 10% of requests that went to the reasoning model made up 65% of OpenAI cost. On energy, the same 10% made up 32%.</div>
+  <div class="tradeoffs">
+    <div><h3>Strengths</h3><ul><li>One clear comparison per row, all on the same 0–100% scale.</li><li>The mismatch is visible without reading numbers.</li></ul></div>
+    <div><h3>Weaknesses</h3><ul><li>OpenAI only (Gemini has no reasoning model in the data).</li><li>Energy appears only as text.</li></ul></div>
+  </div>
+</section><section id="opt-e6" class="panel" aria-labelledby="e6-h">
+  <div>
+    <div class="eyebrow">Option E6 · What $10 buys</div>
+    <h2 id="e6-h">$10 buys 35 reasoning requests, or 328 frontier requests</h2>
+  </div>
+  <div class="howto"><b>How to read:</b> each small square is one request. Same budget, different models.</div>
+  <div>
+    <div class="wrow"><div><div class="big">35</div><div class="lb">reasoning requests<br><span class="mono">o1-preview</span></div></div><div class="waf" style="--c:var(--reasoning)" id="w1"></div></div>
+    <div class="wrow"><div><div class="big">328</div><div class="lb">frontier requests<br><span class="mono">gpt-4o</span></div></div><div class="waf" style="--c:var(--frontier)" id="w2"></div></div>
+    <div class="wrow"><div><div class="big">10,549</div><div class="lb">small/fast requests<br><span class="mono">gpt-4o-mini</span></div></div><div style="font-size:13.5px;color:var(--fg2);align-self:center">Too many to draw: about 32 times the frontier row.</div></div>
+  </div>
+  <div class="tradeoffs">
+    <div><h3>Strengths</h3><ul><li>Everyday framing ("what does $10 get me?") that works for students.</li><li>Squares make the difference countable, not abstract.</li></ul></div>
+    <div><h3>Weaknesses</h3><ul><li>Cost only; energy isn't shown.</li><li>The small/fast row can't be drawn at the same scale.</li></ul></div>
+  </div>
+</section><section id="opt-e7" class="panel" aria-labelledby="e7-h">
+  <div>
+    <div class="eyebrow">Option E7 · Slope chart</div>
+    <h2 id="e7-h">The reasoning model's share jumps from 10% of requests to 65% of the bill</h2>
+  </div>
+  <div class="howto"><b>How to read:</b> left = share of OpenAI requests, right = share of OpenAI cost. A line that rises means that model costs more than its share of use.</div>
+  <div class="scroll"><svg id="e7" class="slope" viewBox="0 0 640 300" style="min-width:520px;width:100%;max-width:720px" role="img" aria-label="Slope chart. Reasoning rises from 10 percent of requests to 65 percent of cost. Frontier falls from 48 to 34 percent. Small/fast falls from 42 to 1 percent."></svg></div>
+  <div class="tradeoffs">
+    <div><h3>Strengths</h3><ul><li>One shape tells the story: the only rising line is reasoning.</li><li>Familiar "before → after" reading.</li></ul></div>
+    <div><h3>Weaknesses</h3><ul><li>Energy isn't shown (it could be a third column).</li><li>OpenAI only.</li></ul></div>
+  </div>
+</section><section id="opt-e8" class="panel" aria-labelledby="e8-h">
+  <div>
+    <div class="eyebrow">Option E8 · Out of every 100</div>
+    <h2 id="e8-h">Out of every 100 OpenAI requests, 10 used the reasoning model, and they ran up 65 of every 100 dollars</h2>
+  </div>
+  <div class="howto"><b>How to read:</b> each grid has 100 squares. Orange squares are the reasoning model's share.</div>
+  <div class="wafs">
+    <div><div class="wbig">10</div><div class="wlab">of every 100 <b>requests</b></div><div class="w100" data-n="10" aria-label="10 of 100"></div></div>
+    <div><div class="wbig">65</div><div class="wlab">of every 100 <b>dollars</b></div><div class="w100" data-n="65" aria-label="65 of 100"></div></div>
+    <div><div class="wbig">32</div><div class="wlab">of every 100 <b>watt-hours</b> (estimated)</div><div class="w100" data-n="32" aria-label="32 of 100"></div></div>
+  </div>
+  <div class="ann">Each reasoning request answered by a frontier model instead saves about $0.25 and 4.8 Wh.</div>
+  <div class="tradeoffs">
+    <div><h3>Strengths</h3><ul><li>"Out of 100" is the most intuitive part-to-whole format.</li><li>Covers requests, cost and energy in one view.</li></ul></div>
+    <div><h3>Weaknesses</h3><ul><li>Shows only the reasoning model, not the other two.</li><li>Rounded to whole squares.</li></ul></div>
+  </div>
+</section>
+  </div>
+  <div class="group" data-g="F"><div class="ghead"><div class="eyebrow">Group F</div><h2>Which teams need to change</h2></div>
+  <section id="opt-f" class="panel" aria-labelledby="f-h">
+    <div>
+      <div class="eyebrow">Option F · Each persona's role when models change</div>
+      <h2 id="f-h">The tenants with the weakest habits today are the ones that should try new models first, so fix their habits before the next switch</h2>
+      <p class="sub">Three roles, left to right, for the next time a model is replaced. Each lane shows its personas' October 2026 habit numbers.</p>
+    </div>
+    <div class="lanes">
+      <div class="lane">
+        <div class="step">1 · Try new models first</div>
+        <div class="role">Explore</div>
+        <div class="who"><span class="pchip hi">Engineering / Developers</span><span class="pchip hi">Sandbox Testers</span></div>
+        <ul><li>Test each new model before campus-wide use</li><li>Report what breaks and what it costs</li><li>Fix malformed requests before scaling up</li></ul>
+        <div class="metric" id="mExplore"></div>
+      </div>
+      <div class="lane">
+        <div class="step">2 · Switch on a planned date</div>
+        <div class="role">Run steady</div>
+        <div class="who"><span class="pchip">Core Production</span><span class="pchip">Enterprise Production</span><span class="pchip">Marketing / Comms</span><span class="pchip">Researchers (R&amp;D)</span></div>
+        <ul><li>Stay on fixed model versions</li><li>Switch after Explore signs off</li><li>Keep caching and short prompts as they are</li></ul>
+        <div class="metric" id="mSteady"></div>
+      </div>
+      <div class="lane">
+        <div class="step">3 · Keep the system current</div>
+        <div class="role">Steward</div>
+        <div class="who"><span class="pchip">Campus IT / leadership</span></div>
+        <ul><li>Maintain the purpose → current-model table</li><li>Check the four habit numbers monthly</li><li>Set the switch date for Run steady</li></ul>
+        <div class="callout" style="font-size:13px">Not a tenant in the data. This role is a recommendation.</div>
+      </div>
+    </div>
+    <div>
+      <div class="ctitle">The four habit numbers that don't depend on which model is current</div>
+      <div class="habits">
+        <div><b>Cache share</b>target ≥ 22.6% (CMU best)</div>
+        <div><b>Malformed requests</b>target ≤ 1.1% (CMU best)</div>
+        <div><b>Prompt size</b>vs CMU best for the same model</div>
+        <div><b>Reasoning share</b>about 10% everywhere; no CMU example of lower</div>
+      </div>
+    </div>
+    <div class="tradeoffs">
+      <div><h3>Strengths</h3><ul><li>Directly answers "what does each persona do next," using all 6 personas.</li><li>Every target comes from a CMU tenant, so nothing is invented.</li><li>Builds on the persona-roles angle you adopted in D18.</li></ul></div>
+      <div><h3>Weaknesses</h3><ul><li>Overlaps with the persona-breakdown chart.</li><li>The roles are a recommendation, not something the data shows.</li><li>The reasoning-model cost story is reduced to one habit number.</li></ul></div>
+    </div>
+  </section><section id="opt-f2" class="panel" aria-labelledby="f2-h">
+    <div>
+      <div class="eyebrow">Option F2 · Habit scorecard with roles</div>
+      <h2 id="f2-h">Two tenants miss CMU's own best on 3 of 3 measurable habits; the other four already meet them</h2>
+      <p class="sub">Each habit is checked against the best value a CMU tenant on the same provider reached. "Meets" = not meaningfully different from that best in our small-differences test (statistically clear and at least 10% apart). The last column assigns each persona's role for the next model change.</p>
+    </div>
+    <div class="scroll"><table class="score" id="f2t">
+      <thead><tr><th>Persona</th><th>Cache share<small>CMU best: 22.6% OpenAI · 19.4% Gemini</small></th><th>Malformed requests<small>CMU best 1.1% (both)</small></th><th>Prompt size<small>× CMU best, same provider</small></th><th>Reasoning share<small>no lower CMU example</small></th><th>Habits met</th><th>Role when models change</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <p class="note">Reasoning share isn't scored: every OpenAI tenant is at 9.6–10.4%, so CMU has no example of lower use, and the Gemini tenants have no reasoning model.</p>
+    <div class="tradeoffs">
+      <div><h3>Strengths</h3><ul><li>The answer is visible at a glance: two highlighted rows, three misses each.</li><li>Every target is a CMU number, so nothing is invented.</li><li>Ties each persona to a forward role.</li></ul></div>
+      <div><h3>Weaknesses</h3><ul><li>A table, so less visual than a chart.</li><li>Overlaps with the persona-breakdown chart; one of them would need to change.</li></ul></div>
+    </div>
+  </section><section id="opt-f3" class="panel" aria-labelledby="f3-h">
+    <div>
+      <div class="eyebrow">Option F3 · Distance to CMU's best</div>
+      <h2 id="f3-h">Dev and Sandbox are far from CMU's best on every habit, so the next model switch should start with them</h2>
+      <p class="sub">One small chart per habit. The line marks the best value a CMU tenant already reached; the arrows show how far Dev and Sandbox have to move.</p>
+    </div>
+    <div class="legend"><span><i class="sw" style="background:var(--hi);border-radius:50%"></i>Engineering / Dev and Sandbox (Explore role)</span><span><i class="sw" style="background:var(--base);border-radius:50%"></i>Other four personas (Run steady role)</span><span><i class="sw" style="background:var(--fg);width:2px;border-radius:0"></i>CMU best</span></div>
+    <div class="facets">
+      <div><div class="ftitle">Cache share</div><div class="fsub">higher is better · gaps vs same-provider best (Gemini best 19.4%)</div><svg id="f3a" viewBox="0 0 300 230" role="img" aria-label="Cache share: four personas at 18.8 to 22.6 percent; Dev 2.7 and Sandbox 2.4 percent, about 20 points below CMU best."></svg></div>
+      <div><div class="ftitle">Malformed requests (400)</div><div class="fsub">lower is better</div><svg id="f3b" viewBox="0 0 300 230" role="img" aria-label="Malformed request rate: four personas at 1.1 to 1.2 percent; Dev 6.1 and Sandbox 6.0 percent, about 5 points above CMU best."></svg></div>
+      <div><div class="ftitle">Prompt size</div><div class="fsub">× CMU best for the same provider, lower is better</div><svg id="f3c" viewBox="0 0 300 230" role="img" aria-label="Prompt size relative to CMU best: four personas at 1.0; Dev 1.9 times and Sandbox 3.8 times."></svg></div>
+    </div>
+    <div class="roles">
+      <div><b>Explore: Dev and Sandbox</b>Try new models first, but bring caching, request checks and prompt size up to CMU's best before scaling.</div>
+      <div><b>Run steady: the other four</b>Already at CMU's best. Stay on fixed versions and switch on a planned date after Explore signs off.</div>
+    </div>
+    <div class="tradeoffs">
+      <div><h3>Strengths</h3><ul><li>The gap is the picture: two orange dots far from the line on all three habits.</li><li>All 6 personas shown, with Dev and Sandbox highlighted (D21).</li><li>Measures are habits, so they stay valid when models change.</li></ul></div>
+      <div><h3>Weaknesses</h3><ul><li>The roles live in text below the chart rather than in the chart itself.</li><li>Three small charts take more space than one table.</li></ul></div>
+    </div>
+  </section><section id="opt-f4" class="panel" aria-labelledby="f4-h">
+  <div>
+    <div class="eyebrow">Option F4 · Three habits, one bar per persona</div>
+    <h2 id="f4-h">Dev and Sandbox reuse almost none of their prompt text and send 5 times more broken requests</h2>
+  </div>
+  <div class="howto"><b>How to read:</b> one bar per persona in each chart. Orange = Dev and Sandbox; grey = the other four. The note under each chart says which direction is better.</div>
+  <div class="two" style="grid-template-columns:repeat(3,minmax(0,1fr))" id="f4"></div>
+  <div class="gloss">
+    <div><b>Reused prompt text (caching)</b>Share of each prompt the provider has seen recently and bills at a discount. Higher is better.</div>
+    <div><b>Broken requests (error 400)</b>Requests rejected because they were badly formed. Lower is better.</div>
+    <div><b>Typical prompt length</b>Median prompt size compared with CMU's best on the same provider. Lower is better.</div>
+  </div>
+  <div class="tradeoffs">
+    <div><h3>Strengths</h3><ul><li>Plain bars, plain labels, all 6 personas.</li><li>The two orange bars stand out in every chart.</li></ul></div>
+    <div><h3>Weaknesses</h3><ul><li>Doesn't say what each persona should do next.</li><li>Three charts to read instead of one.</li></ul></div>
+  </div>
+</section><section id="opt-f5" class="panel" aria-labelledby="f5-h">
+  <div>
+    <div class="eyebrow">Option F5 · Persona cards</div>
+    <h2 id="f5-h">Four of six teams already match CMU's best habits; Dev and Sandbox need help first</h2>
+  </div>
+  <div class="howto"><b>How to read:</b> one card per persona. ✓ = matches CMU's best (no meaningful difference). ✕ = clearly worse. The bottom line says that persona's role the next time a model changes.</div>
+  <div class="cards" id="f5"></div>
+  <div class="tradeoffs">
+    <div><h3>Strengths</h3><ul><li>Each persona can find their own card.</li><li>Plain sentences instead of axes.</li><li>Built-in next step (role).</li></ul></div>
+    <div><h3>Weaknesses</h3><ul><li>Less "chart" and more text.</li><li>Four nearly identical cards take space.</li></ul></div>
+  </div>
+</section><section id="opt-f6" class="panel" aria-labelledby="f6-h">
+  <div>
+    <div class="eyebrow">Option F6 · Today vs. matching CMU's best</div>
+    <h2 id="f6-h">If Dev and Sandbox matched CMU's best habits, their cost per request would fall to the level of their peers</h2>
+  </div>
+  <div class="howto"><b>How to read:</b> the full bar is cost per request today. For Dev and Sandbox, the solid part is what a request would cost if that team matched CMU's best on caching, prompt length and model choice; the dashed part is the saving. Grouped by provider, because OpenAI and Gemini prices differ.</div>
+  <div class="two" id="f6"></div>
+  <div class="ann">Dev would drop 31% (to $0.038) and Sandbox 48% (to $0.011), about the same as their peers. Energy per request would drop 13% and 23%.</div>
+  <div class="tradeoffs">
+    <div><h3>Strengths</h3><ul><li>Shows the payoff, not just the problem.</li><li>Every target comes from a CMU tenant.</li></ul></div>
+    <div><h3>Weaknesses</h3><ul><li>The scenario assumes habits can change without changing the work. We can't verify that from the data.</li><li>Energy only in the text.</li></ul></div>
+  </div>
+</section><section id="opt-f7" class="panel" aria-labelledby="f7-h">
+  <div>
+    <div class="eyebrow">Option F7 · Compared with CMU's best team</div>
+    <h2 id="f7-h">Dev pays 1.5 times and Sandbox 2 times what CMU's best team pays per request</h2>
+  </div>
+  <div class="howto"><b>How to read:</b> 1.0× (the line) = CMU's best team on the same provider. Bars past the line cost or use more per request than that team.</div>
+  <div class="idx" id="f7"></div>
+  <div class="tradeoffs">
+    <div><h3>Strengths</h3><ul><li>One scale (× CMU best) for both cost and energy, so no unit confusion.</li><li>Answers "how far off are we?" in one number per team.</li></ul></div>
+    <div><h3>Weaknesses</h3><ul><li>Shows the gap but not the cause.</li><li>"× best" needs the one-line explanation.</li></ul></div>
+  </div>
+</section><section id="opt-f8" class="panel" aria-labelledby="f8-h">
+  <div>
+    <div class="eyebrow">Option F8 · Which fix helps most</div>
+    <h2 id="f8-h">For Dev and Sandbox, shorter prompts are the biggest single fix for both cost and energy</h2>
+  </div>
+  <div class="howto"><b>How to read:</b> each bar is the saving if that team made one change to match CMU's best team. Longer bar = bigger saving. The fixes overlap, so they don't add up exactly.</div>
+  <div class="fixes" id="f8"></div>
+  <div class="ann">All three fixes together: Dev −31% cost, −13% energy; Sandbox −48% cost, −23% energy.</div>
+  <div class="tradeoffs">
+    <div><h3>Strengths</h3><ul><li>Turns the persona finding into a ranked to-do list.</li><li>Every target comes from a CMU team.</li></ul></div>
+    <div><h3>Weaknesses</h3><ul><li>Only covers Dev and Sandbox.</li><li>Assumes the work stays the same when habits change.</li></ul></div>
+  </div>
+</section>
+  </div>
+  <p class="note">Sources: CMU IronViz synthetic telemetry (202,650 calls); pipeline scripts 03–07 (persona_metrics.csv, scenarios_by_tenant__pricing_list.csv); Jegham et al. 2025 and Google 2025 for energy. "CMU best" = best value among the four baseline tenants on the same provider. Generated 2026-11-14.</p>
+</div>
+<div id="tip" hidden></div>
+<script>
+{
+
+// ---------- E: unit dots ----------
+const U = [
+  {lab:"Reasoning", n:1, c:"--reasoning", cls:"big", txt:"<b>1</b> reasoning request"},
+  {lab:"Frontier", n:9, c:"--frontier", cls:"big", txt:"<b>9</b> frontier requests"},
+  {lab:"Small/fast", n:297, c:"--small", cls:"tiny", txt:"<b>297</b> small/fast requests"},
+];
+const units = document.getElementById("units");
+U.forEach(u => {
+  const row = document.createElement("div"); row.className = "urow";
+  row.innerHTML = `<div class="lab">${u.txt}</div><div class="dots ${u.cls}" style="--c:var(${u.c})" data-tip="${u.n} × ${u.lab.toLowerCase()} requests ≈ $0.28">${"<i></i>".repeat(u.n)}</div>`;
+  units.appendChild(row);
+});
+
+// ---------- E: energy range dot plot ----------
+(() => {
+  const NS = "http://www.w3.org/2000/svg", svg = document.getElementById("ewh");
+  const el = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+  const rows = [
+    ["gemini-1.5-flash","--small",0.68,0.95,1.21],
+    ["gpt-4o-mini","--small",0.90,1.25,1.60],
+    ["gpt-4o","--frontier",1.27,1.78,2.29],
+    ["gemini-1.5-pro","--frontier",2.04,2.87,3.70],
+    ["o1-preview","--reasoning",4.75,6.60,8.45],
+  ];
+  const m = {l:130, r:20, t:10, b:28}, W = 720, H = 200, max = 9;
+  const x = v => m.l + v/max*(W-m.l-m.r), rh = (H-m.t-m.b)/rows.length;
+  [0,2,4,6,8].forEach(t => { el("line",{x1:x(t),x2:x(t),y1:m.t,y2:H-m.b,class:"grid"},svg); el("text",{x:x(t),y:H-m.b+16,"text-anchor":"middle"},svg).textContent = t + " Wh"; });
+  rows.forEach((r,i) => {
+    const y = m.t + rh*i + rh/2, g = el("g",{"data-tip":`${r[0]}: ${r[2].toFixed(1)}–${r[4].toFixed(1)} Wh per request (central ${r[3].toFixed(1)})`},svg);
+    el("rect",{x:0,y:y-rh/2,width:W,height:rh,fill:"transparent"},g);
+    el("text",{x:m.l-10,y:y+4,"text-anchor":"end",style:"font-family:ui-monospace,Consolas,monospace;fill:var(--fg)"},g).textContent = r[0];
+    el("line",{x1:x(r[2]),x2:x(r[4]),y1:y,y2:y,stroke:`var(${r[1]})`,"stroke-width":4,"stroke-linecap":"round",opacity:.45},g);
+    el("circle",{cx:x(r[3]),cy:y,r:6,fill:`var(${r[1]})`,stroke:"var(--surface)","stroke-width":2},g);
+    el("text",{x:x(r[4])+10,y:y+4},g).textContent = r[3].toFixed(1);
+  });
+})();
+
+// ---------- F: habit bars ----------
+const P = {
+  explore: [["Engineering / Developers",2.70,6.12,8038],["Sandbox Testers",2.44,6.03,13986]],
+  steady: [["Core Production",22.63,1.24,4252],["Enterprise Production",18.80,1.16,3693],["Marketing / Comms",22.42,1.11,4316],["Researchers (R&D)",19.36,1.11,3692]],
+};
+function metrics(id, rows, hi) {
+  const box = document.getElementById(id);
+  const block = (title, idx, max, fmt) => {
+    const h = document.createElement("div"); h.className = "lbl"; h.style.marginTop = "4px"; h.textContent = title; box.appendChild(h);
+    rows.forEach(r => { const d = document.createElement("div"); d.className = "mrow";
+      d.innerHTML = `<span>${r[0].split(" ")[0]}</span><span class="track"><span class="fill" style="width:${Math.min(100, r[idx]/max*100)}%;background:${hi ? "var(--hi)" : "var(--muted)"}"></span></span><span class="v">${fmt(r[idx])}</span>`;
+      d.setAttribute("data-tip", `${r[0]}: ${title.toLowerCase()} ${fmt(r[idx])}`); box.appendChild(d); });
+  };
+  block("Cache share", 1, 25, v => v.toFixed(1) + "%");
+  block("Malformed requests (400)", 2, 7, v => v.toFixed(1) + "%");
+  block("Median prompt (tokens)", 3, 14000, v => Math.round(v).toLocaleString("en-US"));
+}
+metrics("mExplore", P.explore, true);
+metrics("mSteady", P.steady, false);
+
+
+}
+{
+
+const NS = "http://www.w3.org/2000/svg";
+const el = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); p && p.appendChild(e); return e; };
+
+// ---------- E3: log-scale dot pairs ----------
+(() => {
+  const svg = document.getElementById("e3"), W = 860, H = 250, m = {l:190, r:40, t:30, b:34};
+  const lo = Math.log10(1/100), hi = Math.log10(15);
+  const x = v => m.l + (Math.log10(v) - lo)/(hi - lo)*(W - m.l - m.r);
+  const rows = [
+    {name:"Reasoning", model:"o1-preview vs gpt-4o", c:"--reasoning", cost:9.23, e:3.71, costL:"9.2× cost", eL:"3.7× energy"},
+    {name:"Small/fast (OpenAI)", model:"gpt-4o-mini vs gpt-4o", c:"--small", cost:1/32.2, e:0.70, costL:"1/32 cost", eL:"0.70× energy"},
+    {name:"Small/fast (Gemini)", model:"1.5-flash vs 1.5-pro", c:"--small", cost:1/70.5, e:0.33, costL:"1/70 cost", eL:"0.33× energy"},
+  ];
+  const ticks = [[0.01,"1/100×"],[0.1,"1/10×"],[1,"1× (frontier)"],[10,"10×"]];
+  ticks.forEach(([v,l]) => { el("line",{x1:x(v),x2:x(v),y1:m.t-10,y2:H-m.b,class:v===1?"":"grid",stroke:v===1?"var(--fg2)":null,"stroke-dasharray":v===1?"4 3":null},svg);
+    el("text",{x:x(v),y:H-m.b+18,"text-anchor":"middle",class:v===1?"strong":""},svg).textContent = l; });
+  el("text",{x:x(0.012),y:m.t-14},svg).textContent = "← cheaper / less energy than frontier";
+  el("text",{x:x(12),y:m.t-14,"text-anchor":"end"},svg).textContent = "more than frontier →";
+  const rh = (H - m.t - m.b)/rows.length;
+  rows.forEach((r,i) => {
+    const y = m.t + rh*i + rh/2, g = el("g",{"data-tip":`${r.model}: ${r.costL}, ${r.eL}`},svg);
+    el("rect",{x:0,y:y-rh/2,width:W,height:rh,fill:"transparent"},g);
+    el("text",{x:m.l-14,y:y,"text-anchor":"end",class:"strong"},g).textContent = r.name;
+    el("text",{x:m.l-14,y:y+15,"text-anchor":"end",style:"font-size:11px;fill:var(--muted)"},g).textContent = r.model;
+    el("line",{x1:x(r.cost),x2:x(r.e),y1:y,y2:y,stroke:`var(${r.c})`,"stroke-width":3,opacity:.4},g);
+    el("circle",{cx:x(r.cost),cy:y,r:7,fill:`var(${r.c})`,stroke:"var(--surface)","stroke-width":2},g);
+    el("circle",{cx:x(r.e),cy:y,r:6,fill:"var(--surface)",stroke:`var(${r.c})`,"stroke-width":2.5},g);
+    const costRight = r.cost > r.e;
+    el("text",{x:x(r.cost)+(costRight?12:-12),y:y-10,"text-anchor":costRight?"start":"end",class:"strong"},g).textContent = r.costL;
+    el("text",{x:x(r.e)+(costRight?-12:12),y:y-10,"text-anchor":costRight?"end":"start"},g).textContent = r.eL;
+  });
+})();
+
+// ---------- persona data (persona_metrics.csv) ----------
+const P = [
+  {n:"Engineering / Developers", prov:"OpenAI", cache:2.70, e400:6.12, prompt:8038/4252, reas:"9.9%", hi:true},
+  {n:"Sandbox Testers", prov:"Gemini", cache:2.44, e400:6.03, prompt:13985.5/3692, reas:"n/a", hi:true},
+  {n:"Core Production Services", prov:"OpenAI", cache:22.63, e400:1.24, prompt:1.00, reas:"9.6%"},
+  {n:"Marketing / Communications", prov:"OpenAI", cache:22.42, e400:1.11, prompt:4315.5/4252, reas:"10.4%"},
+  {n:"Enterprise Production", prov:"Gemini", cache:18.80, e400:1.16, prompt:3692.5/3692, reas:"n/a"},
+  {n:"Researchers (R&D)", prov:"Gemini", cache:19.36, e400:1.11, prompt:1.00, reas:"n/a"},
+];
+const BEST = {cache:22.63, e400:1.11};
+
+// ---------- F2 scorecard ----------
+(() => {
+  const tb = document.querySelector("#f2t tbody");
+  const st = ok => ok ? `<span class="st ok">✓ meets</span>` : `<span class="st no">✕ misses</span>`;
+  P.forEach(p => {
+    // "meets" = not meaningfully different from CMU best (script 04 found 0 of 42 meaningful gaps among the four baseline tenants)
+    const okC = !p.hi, okE = !p.hi, okP = !p.hi;
+    const met = [okC, okE, okP].filter(Boolean).length;
+    const tr = document.createElement("tr"); if (p.hi) tr.className = "hi";
+    tr.innerHTML = `<td><div class="pname">${p.n}<small>${p.prov}</small></div></td>
+      <td><span class="cell">${p.cache.toFixed(1)}% ${st(okC)}</span></td>
+      <td><span class="cell">${p.e400.toFixed(1)}% ${st(okE)}</span></td>
+      <td><span class="cell">${p.prompt.toFixed(1)}× ${st(okP)}</span></td>
+      <td><span class="cell">${p.reas} <span class="st na">not scored</span></span></td>
+      <td><span class="count">${met} / 3</span></td>
+      <td><span class="role">${p.hi ? "Explore" : "Run steady"}</span><div style="font-size:12px;color:var(--muted)">${p.hi ? "fix habits, then test new models" : "fixed versions, planned switch"}</div></td>`;
+    tb.appendChild(tr);
+  });
+})();
+
+// ---------- F3 facets ----------
+function facet(id, key, max, fmt, best, betterHigh, gapLabel) {
+  const svg = document.getElementById(id), W = 300, H = 230, m = {l:16, r:16, t:24, b:28};
+  const x = v => m.l + v/max*(W - m.l - m.r);
+  const ticks = [0, max/2, max];
+  ticks.forEach(t => { el("line",{x1:x(t),x2:x(t),y1:m.t,y2:H-m.b,class:"grid"},svg); el("text",{x:x(t),y:H-m.b+16,"text-anchor":t===0?"start":t===max?"end":"middle"},svg).textContent = fmt(t); });
+  el("line",{x1:x(best),x2:x(best),y1:m.t-8,y2:H-m.b,stroke:"var(--fg)","stroke-width":2},svg);
+  el("text",{x:x(best)+(betterHigh?-4:4),y:m.t-12,"text-anchor":betterHigh?"end":"start",class:"strong"},svg).textContent = "CMU best " + fmt(best);
+  const base = P.filter(p=>!p.hi), out = P.filter(p=>p.hi);
+  const yBase = m.t + 30;
+  base.forEach((p,i) => { const g = el("g",{"data-tip":`${p.n}: ${fmt(p[key])}`},svg);
+    el("circle",{cx:x(p[key]),cy:yBase + (i%2)*10 - 5,r:6,fill:"var(--base)",stroke:"var(--surface)","stroke-width":2},g); });
+  el("text",{x:betterHigh?x(best)-10:x(best)+10,y:yBase+24,"text-anchor":betterHigh?"end":"start",style:"font-size:11px;fill:var(--muted)"},svg).textContent = "other four";
+  out.forEach((p,i) => {
+    const y = m.t + 92 + i*50, g = el("g",{"data-tip":`${p.n}: ${fmt(p[key])} (CMU best ${fmt(best)})`},svg);
+    const x1 = x(p[key]), x2 = x(best);
+    el("line",{x1:x1,x2:x2 + (x1<x2?-8:8),y1:y,y2:y,stroke:"var(--hi)","stroke-width":1.5,"stroke-dasharray":"3 3"},g);
+    el("path",{d: x1<x2 ? `M${x2-8},${y-4}L${x2-1},${y}L${x2-8},${y+4}` : `M${x2+8},${y-4}L${x2+1},${y}L${x2+8},${y+4}`,fill:"none",stroke:"var(--hi)","stroke-width":1.5},g);
+    el("circle",{cx:x1,cy:y,r:7,fill:"var(--hi)",stroke:"var(--surface)","stroke-width":2},g);
+    const name = p.n.startsWith("Eng") ? "Dev" : "Sandbox";
+    const lx = (x1 + x2)/2;
+    const ownBest = key === "cache" ? (p.prov === "OpenAI" ? 22.63 : 19.36) : best;
+    el("text",{x:lx,y:y-9,"text-anchor":"middle",class:"strong"},g).textContent = `${name}: ${gapLabel(p[key], ownBest)}`;
+  });
+}
+facet("f3a", "cache", 25, v => (Math.round(v*10)/10) + "%", 22.63, true, (v,b) => `${v.toFixed(1)}% (−${(b-v).toFixed(0)} pts)`);
+facet("f3b", "e400", 7, v => (Math.round(v*10)/10) + "%", 1.11, false, (v,b) => `${v.toFixed(1)}% (${(v/b).toFixed(1)}×)`);
+facet("f3c", "prompt", 4, v => (Math.round(v*10)/10) + "×", 1.0, false, v => `${v.toFixed(1)}×`);
+
+
+}
+{
+
+// ---------- E5 ----------
+{
+  const rows = [["Reasoning","o1-preview","--reasoning",10,65],["Frontier","gpt-4o","--frontier",48,34],["Small/fast","gpt-4o-mini","--small",42,1]];
+  const box = document.getElementById("e5");
+  rows.forEach(r => {
+    const d = document.createElement("div"); d.className = "pgroup";
+    const bar = (lab, v, solid) => `<div class="row"><span>${lab}</span><div><div class="b${v < 6 ? " out" : ""}" style="width:${Math.max(v, 0.8)}%;background:var(${r[2]});${solid ? "" : "opacity:.4;color:var(--fg)"}">${v}%</div></div></div>`;
+    d.innerHTML = `<div class="hb" style="display:block"><div class="nm">${r[0]}<small>${r[1]}</small></div></div><div class="pair">${bar("of requests", r[3], false)}${bar("of the bill", r[4], true)}</div>`;
+    box.appendChild(d);
+  });
+}
+// ---------- E6 ----------
+{
+  document.getElementById("w1").innerHTML = "<i></i>".repeat(35);
+  document.getElementById("w2").innerHTML = "<i></i>".repeat(328);
+}
+// ---------- F4 ----------
+{
+  const P = [
+    ["Engineering / Dev", true, 2.70, 6.12, 1.89],
+    ["Sandbox", true, 2.44, 6.03, 3.79],
+    ["Core Production", false, 22.63, 1.24, 1.00],
+    ["Marketing", false, 22.42, 1.11, 1.01],
+    ["Enterprise Prod.", false, 18.80, 1.16, 1.00],
+    ["Researchers", false, 19.36, 1.11, 1.00],
+  ];
+  const charts = [["Reused prompt text", "higher is better", 2, 25, v => v.toFixed(0) + "%", true],
+                  ["Broken requests", "lower is better", 3, 7, v => v.toFixed(1) + "%", false],
+                  ["Typical prompt length", "× CMU best · lower is better", 4, 4, v => v.toFixed(1) + "×", false]];
+  const box = document.getElementById("f4");
+  charts.forEach(c => {
+    const sorted = P.slice().sort((a, b) => c[5] ? b[c[2]] - a[c[2]] : a[c[2]] - b[c[2]]);
+    const d = document.createElement("div");
+    d.innerHTML = `<div class="ct">${c[0]}<div style="font-weight:400;color:var(--muted);font-size:12px">${c[1]}</div></div>` +
+      `<div class="hbars" style="gap:6px">` + sorted.map(p => `<div class="hb${p[1] ? "" : " dim"}" style="grid-template-columns:118px minmax(0,1fr);gap:8px"><div class="nm" style="font-size:12.5px">${p[0]}</div><div class="tr"><div class="b" style="height:16px;width:${p[c[2]] / c[3] * 70}%;background:${p[1] ? "var(--hi)" : "var(--base)"}"></div><span class="val" style="font-size:12.5px">${c[4](p[c[2]])}</span></div></div>`).join("") + `</div>`;
+    box.appendChild(d);
+  });
+}
+// ---------- F5 ----------
+{
+  const P = [
+    ["Engineering / Developers", true, "2.7%", "6.1%", "1.9×"],
+    ["Sandbox Testers", true, "2.4%", "6.0%", "3.8×"],
+    ["Core Production Services", false, "22.6%", "1.2%", "1.0×"],
+    ["Marketing / Communications", false, "22.4%", "1.1%", "1.0×"],
+    ["Enterprise Production", false, "18.8%", "1.2%", "1.0×"],
+    ["Researchers (R&D)", false, "19.4%", "1.1%", "1.0×"],
+  ];
+  const box = document.getElementById("f5");
+  P.forEach(p => {
+    const bad = p[1], i = bad ? `<span class="i no">✕</span>` : `<span class="i ok">✓</span>`;
+    const c = document.createElement("div"); c.className = "card" + (bad ? " hi" : "");
+    c.innerHTML = `<div class="hd"><span class="nm">${p[0]}</span><span class="score ${bad ? "no" : "ok"}">${bad ? "0" : "3"} of 3 habits</span></div>
+      <div class="hab">${i}<span>Reuses <b>${p[2]}</b> of prompt text${bad ? " (CMU best about 20%)" : ""}</span></div>
+      <div class="hab">${i}<span><b>${p[3]}</b> of requests are broken${bad ? " (CMU best 1.1%)" : ""}</span></div>
+      <div class="hab">${i}<span>Prompts are <b>${p[4]}</b> CMU's best length</span></div>
+      <div class="role">${bad ? "Next model change: <b>fix these habits, then test new models first</b>" : "Next model change: <b>stay on a fixed version, switch on a planned date</b>"}</div>`;
+    box.appendChild(c);
+  });
+}
+// ---------- F6 ----------
+{
+  const groups = [["OpenAI teams", [["Engineering / Dev", 0.0554, 0.0382], ["Marketing", 0.0383], ["Core Production", 0.0364]]],
+                  ["Gemini teams", [["Sandbox", 0.0212, 0.0111], ["Enterprise Prod.", 0.0106], ["Researchers", 0.0106]]]];
+  const box = document.getElementById("f6"), max = 0.06;
+  groups.forEach(g => {
+    const d = document.createElement("div");
+    d.innerHTML = `<div class="ct">${g[0]} · cost per request</div><div class="hbars" style="gap:8px">` + g[1].map(p => {
+      const hi = p.length === 3, w = v => (v / max * 78) + "%";
+      const bar = hi
+        ? `<div class="stackb" style="width:${w(p[1])}"><div class="b" style="width:${p[2] / p[1] * 100}%;background:var(--hi);border-radius:0"></div><div class="ghost" style="width:${(1 - p[2] / p[1]) * 100}%;border-left:none;opacity:.9;background:color-mix(in srgb, var(--hi) 30%, transparent)"></div></div><span class="val">$${p[1].toFixed(3)} → $${p[2].toFixed(3)}</span>`
+        : `<div class="b" style="width:${w(p[1])};background:var(--base)"></div><span class="val">$${p[1].toFixed(3)}</span>`;
+      return `<div class="hb${hi ? "" : " dim"}" style="grid-template-columns:118px minmax(0,1fr);gap:8px"><div class="nm" style="font-size:13px">${p[0]}</div><div class="tr">${bar}</div></div>`;
+    }).join("") + `</div>`;
+    box.appendChild(d);
+  });
+}
+
+}
+{
+
+// ---------- E7 slope ----------
+{
+  const NS = "http://www.w3.org/2000/svg", svg = document.getElementById("e7");
+  const el = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+  const xl = 200, xr = 440, y = v => 270 - v/70*240;
+  el("text",{x:xl,y:16,"text-anchor":"middle",class:"big"},svg).textContent = "Share of requests";
+  el("text",{x:xr,y:16,"text-anchor":"middle",class:"big"},svg).textContent = "Share of cost";
+  [xl, xr].forEach(x => el("line",{x1:x,x2:x,y1:26,y2:276,stroke:"var(--rule)"},svg));
+  const rows = [["Reasoning","--reasoning",10,65,3],["Frontier","--frontier",48,34,2],["Small/fast","--small",42,1,2]];
+  rows.forEach(r => {
+    const g = el("g",{"data-tip":`${r[0]}: ${r[2]}% of requests, ${r[3]}% of cost`},svg);
+    el("line",{x1:xl,x2:xr,y1:y(r[2]),y2:y(r[3]),stroke:`var(${r[1]})`,"stroke-width":r[4]+1},g);
+    el("circle",{cx:xl,cy:y(r[2]),r:6,fill:`var(${r[1]})`},g);
+    el("circle",{cx:xr,cy:y(r[3]),r:6,fill:`var(${r[1]})`},g);
+    const ly = r[0] === "Small/fast" ? y(r[2]) + 6 : r[0] === "Frontier" ? y(r[2]) - 4 : y(r[2]) + 4;
+    el("text",{x:xl-12,y:ly,"text-anchor":"end",class:"big"},g).textContent = `${r[0]} ${r[2]}%`;
+    el("text",{x:xr+12,y:y(r[3])+4,class:"big"},g).textContent = `${r[3]}%`;
+  });
+}
+// ---------- E8 waffles ----------
+document.querySelectorAll(".w100").forEach(w => {
+  const n = +w.dataset.n; let h = "";
+  for (let i = 0; i < 100; i++) h += `<i${i < n ? ' class="on"' : ""}></i>`;
+  w.innerHTML = h;
+});
+// ---------- F7 indexed bars ----------
+{
+  const P = [["Sandbox Testers","Gemini",true,2.00,1.50],["Engineering / Developers","OpenAI",true,1.52,1.21],
+             ["Marketing / Communications","OpenAI",false,1.05,1.02],["Core Production Services","OpenAI",false,1.00,1.00],
+             ["Researchers (R&D)","Gemini",false,1.00,1.00],["Enterprise Production","Gemini",false,1.00,1.00]];
+  const max = 2.2, w = v => (v / max * 82) + "%", box = document.getElementById("f7");
+  const head = document.createElement("div"); head.className = "irow";
+  head.innerHTML = `<span></span><div style="position:relative;height:14px;font-size:11.5px;color:var(--muted)"><span style="position:absolute;left:calc(46px + 8px + ${1/max*82}% - 14px)">1.0×</span><span style="position:absolute;left:calc(46px + 8px + ${2/max*82}% - 14px)">2.0×</span></div>`;
+  box.appendChild(head);
+  P.forEach(p => {
+    const d = document.createElement("div"); d.className = "irow" + (p[2] ? "" : " dim");
+    const c = p[2] ? "var(--hi)" : "var(--base)";
+    d.innerHTML = `<div class="nm">${p[0]}<small>${p[1]}</small></div>
+      <div class="ibars" data-tip="${p[0]}: ${p[3].toFixed(2)}× the cost and ${p[4].toFixed(2)}× the energy per request of CMU's best ${p[1]} team">
+        <div style="position:absolute;top:-4px;bottom:-4px;left:calc(46px + 8px + ${1/max*82}%);border-left:2px solid var(--fg)"></div>
+        <div class="ibar"><span class="k">cost</span><div class="b" style="width:${w(p[3])};background:${c}"></div><span>${p[3].toFixed(1)}×</span></div>
+        <div class="ibar"><span class="k">energy</span><div class="b" style="width:${w(p[4])};background:${c};opacity:.55"></div><span>${p[4].toFixed(1)}×</span></div>
+      </div>`;
+    box.appendChild(d);
+  });
+}
+// ---------- F8 per-fix bars ----------
+{
+  const T = [["Engineering / Developers", [["Shorter prompts","match CMU's best length",21.3,11.1],["Use the frontier model less","more routine work on small/fast",8.6,1.8],["Reuse prompt text","caching like CMU's best",6.0,4.3]]],
+             ["Sandbox Testers", [["Shorter prompts","match CMU's best length",26.2,18.4],["Use the frontier model less","more routine work on small/fast",22.8,5.1],["Reuse prompt text","caching like CMU's best",11.2,7.1]]]];
+  const box = document.getElementById("f8"), max = 30;
+  T.forEach(t => {
+    const d = document.createElement("div");
+    d.innerHTML = `<div class="ct">${t[0]}</div>` + t[1].map(f => `<div class="fx" data-tip="${t[0]}, ${f[0].toLowerCase()}: −${f[2]}% cost, −${f[3]}% energy">
+      <div class="nm">${f[0]}<small>${f[1]}</small></div>
+      <div class="ibars"><div class="ibar"><span class="k">cost</span><div class="b" style="width:${f[2]/max*70}%;background:var(--hi)"></div><span>−${Math.round(f[2])}%</span></div>
+      <div class="ibar"><span class="k">energy</span><div class="b" style="width:${f[3]/max*70}%;background:var(--hi);opacity:.55"></div><span>−${Math.round(f[3])}%</span></div></div></div>`).join("");
+    box.appendChild(d);
+  });
+}
+
+}
+{
+const btns = document.querySelectorAll(".seg button");
+function show(v) {
+  document.querySelectorAll("[data-g]").forEach(g => g.hidden = !(v === "all" || g.dataset.g === v));
+  btns.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.show === v)));
+  try { localStorage.setItem("p12-show", v); } catch (e) {}
+}
+btns.forEach(b => b.addEventListener("click", () => show(b.dataset.show)));
+let start = "E"; try { start = localStorage.getItem("p12-show") || "E"; } catch (e) {}
+show(start);
+}
+{
+const tip = document.getElementById("tip");
+document.addEventListener("pointermove", e => {
+  const t = e.target.closest && e.target.closest("[data-tip]");
+  if (!t) { tip.hidden = true; return; }
+  tip.textContent = t.getAttribute("data-tip"); tip.hidden = false;
+  const w = tip.offsetWidth; tip.style.left = Math.min(e.clientX + 14, innerWidth - w - 8) + "px"; tip.style.top = (e.clientY + 14) + "px";
+});
+}
+</script>
+</body>
+</html>

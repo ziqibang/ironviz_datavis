@@ -1,0 +1,16 @@
+tenant_id,model,sum,mean
+org-engineering-dev,gpt-4o,718.1228,0.0367
+org-engineering-dev,gpt-4o-mini,12.3904,0.0012
+org-engineering-dev,o1-preview,1112.9583,0.3379
+org-marketing-ai,gpt-4o,399.5421,0.0265
+org-marketing-ai,gpt-4o-mini,14.3076,0.0009
+org-marketing-ai,o1-preview,930.013,0.2558
+org-prod-core,gpt-4o,397.9318,0.0265
+org-prod-core,gpt-4o-mini,14.3408,0.0009
+org-prod-core,o1-preview,854.5333,0.2547
+prj-ai-enterprise-prod,gemini-1.5-flash,5.367,0.0003
+prj-ai-enterprise-prod,gemini-1.5-pro,315.0824,0.022
+prj-ai-r-and-d,gemini-1.5-flash,5.3721,0.0003
+prj-ai-r-and-d,gemini-1.5-pro,318.0235,0.0219
+prj-ai-sandbox-testing,gemini-1.5-flash,4.8286,0.0005
+prj-ai-sandbox-testing,gemini-1.5-pro,608.4361,0.0325

@@ -1,0 +1,7 @@
+tenant_id,persona_label,provider,merge_candidate,calls,pct_400,pct_429,median_input_tok,p90_input_tok,median_output_tok,cache_share_tokenweighted_pct,pct_calls_zero_cache,total_tokens_M
+org-engineering-dev,Engineering / Developers,openai,Dev & Sandbox,36241,6.12,2.02,8038.0,13663.0,1154.0,2.7,94.9,321.77
+org-marketing-ai,Marketing / Communications,openai,Marketing / Communications (no Gemini twin),36142,1.11,1.84,4315.5,8147.0,1038.0,22.42,55.85,210.86
+org-prod-core,Core Production Services,openai,Production Services,36067,1.24,2.14,4252.0,8082.0,1030.5,22.63,55.54,207.35
+prj-ai-enterprise-prod,Enterprise Production,gemini,Production Services,31349,1.16,2.27,3692.5,15239.0,876.0,18.8,62.73,247.5
+prj-ai-r-and-d,Researchers (R&D),gemini,Researchers (no OpenAI twin),31485,1.11,2.06,3692.0,15237.6,883.0,19.36,62.11,250.07
+prj-ai-sandbox-testing,Sandbox Testers,gemini,Dev & Sandbox,31366,6.03,1.89,13985.5,26206.0,1423.0,2.44,95.32,439.52

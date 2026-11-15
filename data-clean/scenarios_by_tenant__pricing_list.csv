@@ -1,0 +1,50 @@
+tenant_id,persona_label,cost_usd,kwh_low,kwh_central,kwh_high,kgco2e_central,scenario,scenario_label,group,delta_cost_usd,delta_cost_usd_pct,delta_kwh_central,delta_kwh_central_pct,delta_kgco2e_central,delta_kgco2e_central_pct
+org-engineering-dev,Engineering / Developers,1843.4715,55.0301,76.2129,97.3957,26.6745,actual,Actual (Oct 2026),actual,0.0,0.0,0.0,0.0,0.0,0.0
+org-marketing-ai,Marketing / Communications,1343.8628,48.6105,68.0008,87.3911,23.8003,actual,Actual (Oct 2026),actual,0.0,0.0,0.0,0.0,0.0,0.0
+org-prod-core,Core Production Services,1266.8058,47.2606,66.1315,85.0023,23.146,actual,Actual (Oct 2026),actual,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-enterprise-prod,Enterprise Production,320.4494,36.2954,51.22,66.1445,17.927,actual,Actual (Oct 2026),actual,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-r-and-d,Researchers (R&D),323.3957,36.5616,51.6392,66.7169,18.0737,actual,Actual (Oct 2026),actual,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-sandbox-testing,Sandbox Testers,613.2647,52.8455,73.2864,93.7274,25.6502,actual,Actual (Oct 2026),actual,0.0,0.0,0.0,0.0,0.0,0.0
+ALL_CAMPUS,All campus,5711.2498,276.6037,386.4908,496.3779,135.2718,actual,Actual (Oct 2026),actual,0.0,0.0,0.0,0.0,0.0,0.0
+org-engineering-dev,Engineering / Developers,1733.443,51.5851,72.9726,94.36,25.5404,L1_cache,Reuse prompt text like CMU's best group (same provider),local good,-110.0284,-5.9685,-3.2403,-4.2517,-1.1341,-4.2517
+org-marketing-ai,Marketing / Communications,1343.8628,48.6105,68.0008,87.3911,23.8003,L1_cache,Reuse prompt text like CMU's best group (same provider),local good,0.0,0.0,0.0,0.0,0.0,0.0
+org-prod-core,Core Production Services,1266.8058,47.2606,66.1315,85.0023,23.146,L1_cache,Reuse prompt text like CMU's best group (same provider),local good,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-enterprise-prod,Enterprise Production,320.4494,36.2954,51.22,66.1445,17.927,L1_cache,Reuse prompt text like CMU's best group (same provider),local good,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-r-and-d,Researchers (R&D),323.3957,36.5616,51.6392,66.7169,18.0737,L1_cache,Reuse prompt text like CMU's best group (same provider),local good,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-sandbox-testing,Sandbox Testers,555.8799,48.2077,68.9241,89.6405,24.1234,L1_cache,Reuse prompt text like CMU's best group (same provider),local good,-57.3849,-9.3573,-4.3623,-5.9525,-1.5268,-5.9525
+ALL_CAMPUS,All campus,5543.8365,268.521,378.8881,489.2552,132.6108,L1_cache,Reuse prompt text like CMU's best group (same provider),local good,-167.4133,-2.9313,-7.6027,-1.9671,-2.6609,-1.9671
+org-engineering-dev,Engineering / Developers,1450.4328,48.9467,67.7364,86.5262,23.7078,L2_prompt,Prompt size like CMU's best group,local good,-393.0387,-21.3206,-8.4765,-11.1221,-2.9668,-11.1221
+org-marketing-ai,Marketing / Communications,1343.8628,48.6105,68.0008,87.3911,23.8003,L2_prompt,Prompt size like CMU's best group,local good,0.0,0.0,0.0,0.0,0.0,0.0
+org-prod-core,Core Production Services,1266.8058,47.2606,66.1315,85.0023,23.146,L2_prompt,Prompt size like CMU's best group,local good,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-enterprise-prod,Enterprise Production,320.4494,36.2954,51.22,66.1445,17.927,L2_prompt,Prompt size like CMU's best group,local good,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-r-and-d,Researchers (R&D),323.3957,36.5616,51.6392,66.7169,18.0737,L2_prompt,Prompt size like CMU's best group,local good,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-sandbox-testing,Sandbox Testers,452.8529,43.1805,59.8301,76.4798,20.9405,L2_prompt,Prompt size like CMU's best group,local good,-160.4118,-26.157,-13.4563,-18.3612,-4.7097,-18.3612
+ALL_CAMPUS,All campus,5157.7994,260.8553,364.558,468.2607,127.5953,L2_prompt,Prompt size like CMU's best group,local good,-553.4504,-9.6905,-21.9328,-5.6748,-7.6765,-5.6748
+org-engineering-dev,Engineering / Developers,1684.1007,54.0595,74.8364,95.6134,26.1927,L3_model_mix,Frontier-model share like CMU's best group,local good,-159.3708,-8.6451,-1.3765,-1.8061,-0.4818,-1.8061
+org-marketing-ai,Marketing / Communications,1343.8628,48.6105,68.0008,87.3911,23.8003,L3_model_mix,Frontier-model share like CMU's best group,local good,0.0,0.0,0.0,0.0,0.0,0.0
+org-prod-core,Core Production Services,1266.8058,47.2606,66.1315,85.0023,23.146,L3_model_mix,Frontier-model share like CMU's best group,local good,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-enterprise-prod,Enterprise Production,320.4494,36.2954,51.22,66.1445,17.927,L3_model_mix,Frontier-model share like CMU's best group,local good,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-r-and-d,Researchers (R&D),323.3957,36.5616,51.6392,66.7169,18.0737,L3_model_mix,Frontier-model share like CMU's best group,local good,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-sandbox-testing,Sandbox Testers,473.6089,50.1697,69.5314,88.8931,24.336,L3_model_mix,Frontier-model share like CMU's best group,local good,-139.6559,-22.7725,-3.755,-5.1238,-1.3143,-5.1238
+ALL_CAMPUS,All campus,5412.2232,272.9573,381.3593,489.7612,133.4757,L3_model_mix,Frontier-model share like CMU's best group,local good,-299.0266,-5.2357,-5.1315,-1.3277,-1.796,-1.3277
+org-engineering-dev,Engineering / Developers,1271.3442,47.1705,66.0665,84.9625,23.1233,L_all,All three: match CMU's best group,local good,-572.1273,-31.0353,-10.1464,-13.3132,-3.5512,-13.3132
+org-marketing-ai,Marketing / Communications,1343.8628,48.6105,68.0008,87.3911,23.8003,L_all,All three: match CMU's best group,local good,0.0,0.0,0.0,0.0,0.0,0.0
+org-prod-core,Core Production Services,1266.8058,47.2606,66.1315,85.0023,23.146,L_all,All three: match CMU's best group,local good,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-enterprise-prod,Enterprise Production,320.4494,36.2954,51.22,66.1445,17.927,L_all,All three: match CMU's best group,local good,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-r-and-d,Researchers (R&D),323.3957,36.5616,51.6392,66.7169,18.0737,L_all,All three: match CMU's best group,local good,0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-sandbox-testing,Sandbox Testers,326.1693,40.0773,56.5489,73.0204,19.7921,L_all,All three: match CMU's best group,local good,-287.0954,-46.8143,-16.7376,-22.8386,-5.8581,-22.8386
+ALL_CAMPUS,All campus,4852.0271,255.976,359.6068,463.2377,125.8624,L_all,All three: match CMU's best group,local good,-859.2228,-15.0444,-26.884,-6.9559,-9.4094,-6.9559
+org-engineering-dev,Engineering / Developers,1788.2431,53.3009,74.5864,95.872,26.1053,G1_cache_step,"Per unit: +10 points of reused prompt text, every team",global good (per unit),-55.2284,-2.9959,-1.6265,-2.1341,-0.5693,-2.1341
+org-marketing-ai,Marketing / Communications,1310.3778,47.6626,67.1091,86.5557,23.4882,G1_cache_step,"Per unit: +10 points of reused prompt text, every team",global good (per unit),-33.485,-2.4917,-0.8917,-1.3112,-0.3121,-1.3112
+org-prod-core,Core Production Services,1235.1953,46.3309,65.257,84.183,22.8399,G1_cache_step,"Per unit: +10 points of reused prompt text, every team",global good (per unit),-31.6105,-2.4953,-0.8745,-1.3223,-0.3061,-1.3223
+prj-ai-enterprise-prod,Enterprise Production,303.9441,34.9372,49.9425,64.9477,17.4799,G1_cache_step,"Per unit: +10 points of reused prompt text, every team",global good (per unit),-16.5053,-5.1507,-1.2775,-2.4942,-0.4471,-2.4942
+prj-ai-r-and-d,Researchers (R&D),306.6997,35.188,50.3473,65.5065,17.6215,G1_cache_step,"Per unit: +10 points of reused prompt text, every team",global good (per unit),-16.6959,-5.1627,-1.292,-2.502,-0.4522,-2.502
+prj-ai-sandbox-testing,Sandbox Testers,579.366,50.1058,70.7095,91.3131,24.7483,G1_cache_step,"Per unit: +10 points of reused prompt text, every team",global good (per unit),-33.8987,-5.5276,-2.577,-3.5163,-0.9019,-3.5163
+ALL_CAMPUS,All campus,5523.826,267.5255,377.9517,488.378,132.2831,G1_cache_step,"Per unit: +10 points of reused prompt text, every team",global good (per unit),-187.4238,-3.2817,-8.5391,-2.2094,-2.9887,-2.2094
+org-engineering-dev,Engineering / Developers,1768.3853,54.3195,75.2324,96.1453,26.3313,G2_route_step,Per unit: 10% of reasoning requests answered by gpt-4o instead,global good (per unit),-75.0861,-4.0731,-0.9805,-1.2865,-0.3432,-1.2865
+org-marketing-ai,Marketing / Communications,1285.4429,47.7921,66.875,85.9579,23.4062,G2_route_step,Per unit: 10% of reasoning requests answered by gpt-4o instead,global good (per unit),-58.4199,-4.3472,-1.1258,-1.6556,-0.394,-1.6556
+org-prod-core,Core Production Services,1213.2245,46.5056,65.0934,83.6812,22.7827,G2_route_step,Per unit: 10% of reasoning requests answered by gpt-4o instead,global good (per unit),-53.5813,-4.2296,-1.0381,-1.5697,-0.3633,-1.5697
+prj-ai-enterprise-prod,Enterprise Production,320.4494,36.2954,51.22,66.1445,17.927,G2_route_step,Per unit: 10% of reasoning requests answered by gpt-4o instead,global good (per unit),0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-r-and-d,Researchers (R&D),323.3957,36.5616,51.6392,66.7169,18.0737,G2_route_step,Per unit: 10% of reasoning requests answered by gpt-4o instead,global good (per unit),0.0,0.0,0.0,0.0,0.0,0.0
+prj-ai-sandbox-testing,Sandbox Testers,613.2647,52.8455,73.2864,93.7274,25.6502,G2_route_step,Per unit: 10% of reasoning requests answered by gpt-4o instead,global good (per unit),0.0,0.0,0.0,0.0,0.0,0.0
+ALL_CAMPUS,All campus,5524.1625,274.3197,383.3464,492.3731,134.1712,G2_route_step,Per unit: 10% of reasoning requests answered by gpt-4o instead,global good (per unit),-187.0874,-3.2758,-3.1444,-0.8136,-1.1005,-0.8136

@@ -1,0 +1,7 @@
+tenant_id,pct_400_actual,pct_400_local_good,calls,failed_400_calls_avoided_30d
+org-engineering-dev,6.117,1.112,36241,1814.0
+org-marketing-ai,1.112,1.112,36142,0.0
+org-prod-core,1.242,1.112,36067,0.0
+prj-ai-enterprise-prod,1.161,1.115,31349,0.0
+prj-ai-r-and-d,1.115,1.115,31485,0.0
+prj-ai-sandbox-testing,6.026,1.115,31366,1540.0

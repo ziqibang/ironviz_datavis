@@ -1,0 +1,13 @@
+region,lat,lon,label,note
+us-west1,45.60,-121.18,"The Dalles, OR","Approximate city coordinates of the Google Cloud region (public region city from CodeCarbon impact.csv); used only to place map markers"
+us-west2,34.05,-118.24,"Los Angeles, CA",same
+us-west3,40.76,-111.89,"Salt Lake City, UT",same
+us-west4,36.17,-115.14,"Las Vegas, NV",same
+us-central1,41.26,-95.86,"Council Bluffs, IA",same
+us-south1,32.78,-96.80,"Dallas, TX",same
+us-east1,33.20,-80.01,"Moncks Corner, SC",same
+us-east4,39.04,-77.49,"Ashburn, VA",same
+us-east5,39.96,-83.00,"Columbus, OH",same
+northamerica-northeast1,45.50,-73.57,"Montréal, QC",same
+northamerica-northeast2,43.65,-79.38,"Toronto, ON",same
+CMU,40.44,-79.94,"CMU, Pittsburgh, PA",Campus location (for distance only)
